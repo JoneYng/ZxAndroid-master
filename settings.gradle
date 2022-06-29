@@ -22,5 +22,10 @@ include ':lib_log'
 include ':lib_domain'
 //网络库
 include ':lib_net'
-
+//业务基础模块
 include ':lib_base_module'
+
+//业务模块
+include ':module_main'
+include ':module_me'
+include ':module_home'
