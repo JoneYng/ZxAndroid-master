@@ -1,15 +1,7 @@
-pluginManagement {
-    repositories {
-        maven { url 'https://maven.aliyun.com/repository/google' }
-        maven { url 'https://maven.aliyun.com/repository/public' }
-        gradlePluginPortal()
-        google()
-        mavenCentral()
-    }
-}
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
+        //阿里镜像仓库
         maven { url 'https://maven.aliyun.com/repository/google' }
         maven { url 'https://maven.aliyun.com/repository/public' }
         google()
@@ -18,3 +10,13 @@ dependencyResolutionManagement {
 }
 rootProject.name = "ZxAndroid"
 include ':app'
+//基础模块
+include ':lib_common'
+
+include ':lib_base'
+//日志库
+include ':lib_log'
+//实体
+include ':lib_domain'
+//网络库
+include ':lib_net'
