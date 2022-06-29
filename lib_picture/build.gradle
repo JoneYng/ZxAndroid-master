@@ -1,0 +1,18 @@
+apply from: "../lib.build.gradle"
+
+android {
+
+}
+
+dependencies {
+    
+    api deps.glide
+    kapt deps.glide_compiler
+    api deps.glide_transformations
+
+    //图片选择
+    api pictures.picture_library
+    api pictures.picture_compress
+    api pictures.picture_ucrop
+//    api pictures.picture_camerax
+}

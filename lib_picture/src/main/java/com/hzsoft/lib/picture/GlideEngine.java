@@ -1,4 +1,4 @@
-package com.hzsoft.lib.common.picture;
+package com.hzsoft.lib.picture;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -15,8 +15,7 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
-import com.hzsoft.lib.base.BaseApplication;
-import com.hzsoft.lib.common.R;
+import com.hzsoft.lib.log.R;
 import com.luck.picture.lib.engine.ImageEngine;
 import com.luck.picture.lib.interfaces.OnCallbackListener;
 import com.luck.picture.lib.utils.ActivityCompatHelper;
@@ -62,7 +61,7 @@ public class GlideEngine implements ImageEngine {
         }
         RequestOptions options = new RequestOptions()
                 .override(maxWidth, maxHeight);
-        Glide.with(BaseApplication.getContext())
+        Glide.with(context)
                 .asBitmap()
                 .load(url)
                 .apply(options)
@@ -100,7 +99,7 @@ public class GlideEngine implements ImageEngine {
                 .transform(new MultiTransformation(new CenterCrop(), new RoundedCorners(8)))
                 .placeholder(R.drawable.ps_image_placeholder)
                 .error(R.drawable.ps_image_placeholder);
-        Glide.with(BaseApplication.getContext())
+        Glide.with(context)
                 .asBitmap()
                 .load(url)
                 .apply(options)
@@ -125,7 +124,7 @@ public class GlideEngine implements ImageEngine {
                 .centerCrop()
                 .placeholder(R.drawable.ps_image_placeholder)
                 .error(R.drawable.ps_image_placeholder);
-        Glide.with(BaseApplication.getContext())
+        Glide.with(context)
                 .asBitmap()
                 .load(url)
                 .apply(options)

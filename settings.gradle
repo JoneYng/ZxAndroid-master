@@ -24,6 +24,8 @@ include ':lib_domain'
 include ':lib_net'
 //业务基础模块
 include ':lib_base_module'
+//图片选择模块
+include ':lib_picture'
 
 //业务模块
 include ':module_main'

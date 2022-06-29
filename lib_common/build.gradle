@@ -8,6 +8,7 @@ dependencies {
 
     api project(":lib_base")
     api project(":lib_net")
+    api project(":lib_picture")
 
     api deps.rxpermissions
     api deps.MultiImageSelector
@@ -22,9 +23,5 @@ dependencies {
     debugApi deps.leakcanary_android
 
 
-    //图片选择
-    api pictures.picture_library
-    api pictures.picture_compress
-    api pictures.picture_ucrop
-//    api pictures.picture_camerax
+
 }

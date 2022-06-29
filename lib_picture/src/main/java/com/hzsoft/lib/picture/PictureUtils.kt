@@ -7,8 +7,8 @@ import android.net.Uri
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
-import com.hzsoft.lib.base.BaseApplication
-import com.hzsoft.lib.common.R
+import com.hzsoft.lib.log.R
+import com.hzsoft.lib.picture.GlideEngine
 import com.luck.picture.lib.basic.PictureSelector
 import com.luck.picture.lib.config.PictureMimeType
 import com.luck.picture.lib.config.PictureSelectionConfig.selectorStyle
@@ -149,7 +149,7 @@ object PictureUtils {
             .setMaxSelectNum(max)//图片最大选择数量
             .isMaxSelectEnabledMask(true)//达到最大选择数是否开启禁选蒙层
             .isOriginalControl(true)//是否开启原图功能
-            .setEditMediaInterceptListener(getCustomEditMediaEvent())//编辑
+            .setEditMediaInterceptListener(getCustomEditMediaEvent(activity))//编辑
             .setSelectedData(selectMedias)
             .forResult(requestCode)
     }
@@ -171,10 +171,10 @@ object PictureUtils {
      *
      * @return
      */
-    private fun getCustomEditMediaEvent(): OnMediaEditInterceptListener {
+    private fun getCustomEditMediaEvent(context:Context): OnMediaEditInterceptListener {
         return MeOnMediaEditInterceptListener(
-            getSandboxPath(),
-            buildOptions()
+            getSandboxPath(context),
+            buildOptions(context)
         )
     }
 
@@ -183,8 +183,8 @@ object PictureUtils {
      *
      * @return
      */
-    private fun getSandboxPath(): String {
-        val externalFilesDir: File? = BaseApplication.getContext().getExternalFilesDir("")
+    private fun getSandboxPath(context:Context): String {
+        val externalFilesDir: File? = context.getExternalFilesDir("")
         val customFile = File(externalFilesDir?.absolutePath, IMAGE_CACHE_DIR)
         if (!customFile.exists()) {
             customFile.mkdirs()
@@ -197,7 +197,7 @@ object PictureUtils {
      *
      * @return
      */
-    private fun buildOptions(): UCrop.Options {
+    private fun buildOptions(context:Context): UCrop.Options {
         val options = UCrop.Options()
 //        options.setHideBottomControls(!cb_hide.isChecked())
 //        options.setFreeStyleCropEnabled(cb_styleCrop.isChecked())
@@ -205,7 +205,7 @@ object PictureUtils {
 //        options.setShowCropGrid(cb_showCropGrid.isChecked())
 //        options.setCircleDimmedLayer(cb_crop_circular.isChecked())
 //        options.withAspectRatio(aspect_ratio_x.toFloat(), aspect_ratio_y.toFloat())
-        options.setCropOutputPathDir(getSandboxPath())
+        options.setCropOutputPathDir(getSandboxPath(context))
         options.isCropDragSmoothToCenter(false)
 //        options.setSkipCropMimeType(getNotSupportCrop())
 //        options.isForbidCropGifWebp(cb_not_gif.isChecked())
@@ -222,11 +222,11 @@ object PictureUtils {
             } else {
                 options.setStatusBarColor(
                     ContextCompat.getColor(
-                        BaseApplication.getContext(),
+                        context,
                         R.color.ps_color_grey
                     )
                 )
-                options.setToolbarColor(ContextCompat.getColor(BaseApplication.getContext(), R.color.ps_color_grey))
+                options.setToolbarColor(ContextCompat.getColor(context, R.color.ps_color_grey))
             }
             val titleBarStyle: TitleBarStyle = selectorStyle.titleBarStyle
             if (StyleUtils.checkStyleValidity(titleBarStyle.titleTextColor)) {
@@ -234,17 +234,17 @@ object PictureUtils {
             } else {
                 options.setToolbarWidgetColor(
                     ContextCompat.getColor(
-                        BaseApplication.getContext(),
+                        context,
                         R.color.ps_color_white
                     )
                 )
             }
         } else {
-            options.setStatusBarColor(ContextCompat.getColor(BaseApplication.getContext(), R.color.ps_color_grey))
-            options.setToolbarColor(ContextCompat.getColor(BaseApplication.getContext(), R.color.ps_color_grey))
+            options.setStatusBarColor(ContextCompat.getColor(context, R.color.ps_color_grey))
+            options.setToolbarColor(ContextCompat.getColor(context, R.color.ps_color_grey))
             options.setToolbarWidgetColor(
                 ContextCompat.getColor(
-                    BaseApplication.getContext(),
+                    context,
                     R.color.ps_color_white
                 )
             )
