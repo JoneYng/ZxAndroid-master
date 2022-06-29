@@ -2,8 +2,10 @@ dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
         //阿里镜像仓库
-        maven { url 'https://maven.aliyun.com/repository/google' }
         maven { url 'https://maven.aliyun.com/repository/public' }
+        maven { url 'https://maven.aliyun.com/repository/google' }
+        maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }
+        maven { url 'https://jitpack.io' }
         google()
         mavenCentral()
     }
@@ -20,3 +22,5 @@ include ':lib_log'
 include ':lib_domain'
 //网络库
 include ':lib_net'
+
+include ':lib_base_module'

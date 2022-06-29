@@ -32,10 +32,10 @@ deps.eventbus = "org.greenrobot:eventbus:3.2.0"
 deps.MultiImageSelector = "com.github.lovetuzitong:MultiImageSelector:1.2"
 
 // rxlife
-def rxLifecycleVersion = '2.2.2'
-deps.rxlifecycle = "com.trello.rxlifecycle2:rxlifecycle:$rxLifecycleVersion"
-deps.rxlifecycle_android = "com.trello.rxlifecycle2:rxlifecycle-android:$rxLifecycleVersion"
-deps.rxlifecycle_components = "com.trello.rxlifecycle2:rxlifecycle-components:$rxLifecycleVersion"
+def rxLifecycleVersion = '3.1.0'
+deps.rxlifecycle = "com.trello.rxlifecycle3:rxlifecycle:$rxLifecycleVersion"
+deps.rxlifecycle_android = "com.trello.rxlifecycle3:rxlifecycle-android:$rxLifecycleVersion"
+deps.rxlifecycle_components = "com.trello.rxlifecycle3:rxlifecycle-components:$rxLifecycleVersion"
 
 // Room
 def roomVersion = '2.2.5'
