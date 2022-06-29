@@ -20,4 +20,11 @@ dependencies {
     kapt deps.moshi_kotlin_codegen
 
     debugApi deps.leakcanary_android
+
+
+    //图片选择
+    api pictures.picture_library
+    api pictures.picture_compress
+    api pictures.picture_ucrop
+//    api pictures.picture_camerax
 }

@@ -98,3 +98,18 @@ deps.skeleton = "com.ethanhua:skeleton:1.1.2"
 deps.shimmerlayout = "io.supercharge:shimmerlayout:2.1.0"
 
 ext.deps = deps
+
+// 图片选择版本
+// https://github.com/LuckSiege/PictureSelector/wiki/PictureSelector-3.0-%E5%8A%9F%E8%83%BDapi%E8%AF%B4%E6%98%8E
+def pictures = [:]
+def pictureVersion = "v3.10.2"
+//图片选择
+pictures.picture_library = "io.github.lucksiege:pictureselector:$pictureVersion"
+// 图片压缩 (按需引入)
+pictures.picture_compress = "io.github.lucksiege:compress:$pictureVersion"
+// 图片裁剪 (按需引入)
+pictures.picture_ucrop = "io.github.lucksiege:ucrop:$pictureVersion"
+// 自定义相机 (按需引入) 最小版本21暂不引入
+pictures.picture_camerax = "io.github.lucksiege:camerax:$pictureVersion"
+
+ext.pictures = pictures
