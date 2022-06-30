@@ -43,7 +43,7 @@ object PictureUtils {
         val whiteTitleBarStyle = TitleBarStyle()
         whiteTitleBarStyle.titleBackgroundColor =
             ContextCompat.getColor(context, R.color.ps_color_white)
-        whiteTitleBarStyle.titleDrawableRightResource = com.hzsoft.lib.log.R.mipmap.ic_orange_arrow_down
+//        whiteTitleBarStyle.titleDrawableRightResource = com.hzsoft.lib.picture.R.mipmap.ic_orange_arrow_down
         whiteTitleBarStyle.titleLeftBackResource = R.drawable.ps_ic_black_back
         whiteTitleBarStyle.titleTextColor =
             ContextCompat.getColor(context, R.color.ps_color_black)
