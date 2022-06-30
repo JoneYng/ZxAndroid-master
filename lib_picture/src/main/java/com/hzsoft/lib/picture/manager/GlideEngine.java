@@ -1,4 +1,4 @@
-package com.hzsoft.lib.picture;
+package com.hzsoft.lib.picture.manager;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -15,16 +15,16 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
-import com.hzsoft.lib.log.R;
+import com.luck.picture.lib.R;
 import com.luck.picture.lib.engine.ImageEngine;
 import com.luck.picture.lib.interfaces.OnCallbackListener;
 import com.luck.picture.lib.utils.ActivityCompatHelper;
 
+
 /**
- * @description:
- * @author: zhouxiang
- * @created: 2022/06/23 09:49
- * @version: V1.0
+ * @author：zhou
+ * @date：2022-06-30 17:58
+ * @describe：GlideEngine
  */
 public class GlideEngine implements ImageEngine {
 
