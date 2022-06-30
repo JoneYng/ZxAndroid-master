@@ -140,7 +140,10 @@ object PictureUtils {
                 }
             }).startActivityPreview(position, true, mediasList)
     }
-
+    /**
+     * 选择照片
+     * @param
+     */
     fun choosePic(activity: Activity, requestCode: Int, max: Int, selectMedias: List<LocalMedia>?) {
         PictureSelector.create(activity)
             .openGallery(SelectMimeType.ofImage())
@@ -151,6 +154,23 @@ object PictureUtils {
             .isOriginalControl(true)//是否开启原图功能
             .setEditMediaInterceptListener(getCustomEditMediaEvent(activity))//编辑
             .setSelectedData(selectMedias)
+            .forResult(requestCode)
+    }
+
+    /**
+     * 选择一张照片 直接返回
+     */
+    fun chooseSinglePic(activity: Activity, requestCode: Int, selectMedias: List<LocalMedia>?) {
+        PictureSelector.create(activity)
+            .openGallery(SelectMimeType.ofImage())
+            .setSelectorUIStyle(getStyle(activity))
+            .setImageEngine(GlideEngine.createGlideEngine())
+            .setMaxSelectNum(1)//图片最大选择数量
+            .isMaxSelectEnabledMask(true)//达到最大选择数是否开启禁选蒙层
+            .isOriginalControl(true)//是否开启原图功能
+            .setEditMediaInterceptListener(getCustomEditMediaEvent(activity))//编辑
+            .setSelectedData(selectMedias)
+            .isDirectReturnSingle(true)
             .forResult(requestCode)
     }
 
