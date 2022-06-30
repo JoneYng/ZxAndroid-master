@@ -1,4 +1,4 @@
-package com.hzsoft.lib.picture;
+package com.hzsoft.lib.picture.view;
 
 import android.annotation.TargetApi;
 import android.content.Context;
