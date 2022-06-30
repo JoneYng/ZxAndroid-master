@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.hzsoft.lib.log.R;
+import com.hzsoft.lib.picture.R;
 import com.hzsoft.lib.picture.listener.OnItemLongClickListener;
 import com.luck.picture.lib.config.PictureMimeType;
 import com.luck.picture.lib.config.SelectMimeType;

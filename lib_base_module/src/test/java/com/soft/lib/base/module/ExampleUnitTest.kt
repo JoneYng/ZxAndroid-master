@@ -1,4 +1,4 @@
-package com.hzsoft.lib.log
+package com.soft.lib.base.module
 
 import org.junit.Test
 

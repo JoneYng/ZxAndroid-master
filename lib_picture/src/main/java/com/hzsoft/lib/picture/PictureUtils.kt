@@ -8,7 +8,6 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import com.hzsoft.lib.picture.manager.GlideEngine
-import com.luck.picture.lib.R
 import com.luck.picture.lib.basic.PictureSelector
 import com.luck.picture.lib.config.PictureMimeType
 import com.luck.picture.lib.config.PictureSelectionConfig.selectorStyle
@@ -43,7 +42,7 @@ object PictureUtils {
         val whiteTitleBarStyle = TitleBarStyle()
         whiteTitleBarStyle.titleBackgroundColor =
             ContextCompat.getColor(context, R.color.ps_color_white)
-//        whiteTitleBarStyle.titleDrawableRightResource = com.hzsoft.lib.picture.R.mipmap.ic_orange_arrow_down
+        whiteTitleBarStyle.titleDrawableRightResource = R.mipmap.ic_orange_arrow_down
         whiteTitleBarStyle.titleLeftBackResource = R.drawable.ps_ic_black_back
         whiteTitleBarStyle.titleTextColor =
             ContextCompat.getColor(context, R.color.ps_color_black)
