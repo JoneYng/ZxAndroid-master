@@ -111,5 +111,36 @@ pictures.picture_compress = "io.github.lucksiege:compress:$pictureVersion"
 pictures.picture_ucrop = "io.github.lucksiege:ucrop:$pictureVersion"
 // 自定义相机 (按需引入) 最小版本21暂不引入
 pictures.picture_camerax = "io.github.lucksiege:camerax:$pictureVersion"
-
 ext.pictures = pictures
+
+
+ext {
+//友盟相关
+    def commonVersion = "9.5.0"
+    def asmsVersion = "1.4.0"
+    def apmVersion = "1.4.0"
+    def pushVersion = "6.5.1"
+    def shareCoreVersion = "7.1.5"
+// 图片选择版本
+     umsdk = [
+            // 必选
+            "common"    : "com.umeng.umsdk:common:$commonVersion",
+            "asms"      : "com.umeng.umsdk:asms:$asmsVersion",
+            // 错误分析升级为独立SDK，看crash数据请一定集
+            "apm"       : "com.umeng.umsdk:apm:$apmVersion",
+            //友盟Push依赖
+            "push"      : "com.umeng.umsdk:push:$pushVersion",
+            //分享核心库，必选
+            "share-core": "com.umeng.umsdk:share-core:$shareCoreVersion",
+            //微信完整版
+            "share-wx"  : "com.umeng.umsdk:share-wx:$shareCoreVersion",
+            //微信官方依赖库，必选
+            "wechat-sdk": "com.tencent.mm.opensdk:wechat-sdk-android-without-mta:6.7.0",
+            //QQ完整版
+            "share-qq"  : "com.umeng.umsdk:share-qq:$shareCoreVersion",
+            //QQ官方依赖库，必选
+            "qqopensdk" : "com.tencent.tauth:qqopensdk:3.53.0",
+            //新浪微博完整版
+            "share-sina": "com.umeng.umsdk:share-sina:$shareCoreVersion",
+    ]
+}

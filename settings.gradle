@@ -26,8 +26,11 @@ include ':lib_net'
 include ':lib_base_module'
 //图片选择模块
 include ':lib_picture'
+//分享登录基础模块
+include ':lib_share'
 
 //业务模块
 include ':module_main'
 include ':module_me'
 include ':module_home'
+include ':lib_share'

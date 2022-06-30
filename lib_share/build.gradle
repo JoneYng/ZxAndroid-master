@@ -1,0 +1,12 @@
+apply from: "../lib.build.gradle"
+
+android {
+
+}
+def apiUmSdk = rootProject.ext.umsdk
+
+dependencies {
+    // 友盟库
+    apiUmSdk.each { k, v -> api v }
+
+}
