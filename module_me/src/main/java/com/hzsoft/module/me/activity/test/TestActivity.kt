@@ -92,7 +92,6 @@ class TestActivity : BaseActivity(),View.OnClickListener{
             override fun openPicture() {
                 PictureUtils.choosePic(this@TestActivity,PictureConfig.CHOOSE_REQUEST,maxSelectNum,mAdapter.data)
             }
-
         })
     }
 
