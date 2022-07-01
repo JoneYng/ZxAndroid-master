@@ -1,0 +1,26 @@
+apply from: "../lib.build.gradle"
+
+android {
+//    repositories {
+//        flatDir {
+//            dirs 'libs'
+//        }
+//    }
+}
+def apiUmSdk = rootProject.ext.umsdk
+def apiUmPushSdk = rootProject.ext.umPush
+
+dependencies {
+    // 友盟库 核心、分享
+    apiUmSdk.each { k, v -> api v }
+    // 友盟库 推送
+    apiUmPushSdk.each { k, v -> api v }
+    //瓦力打包
+    api deps.walle
+    //android系统依赖
+    api deps.androidx_appcompat
+    //微博授权库
+//    implementation files('libs/openDefault-10.10.0.aar')
+    implementation files('libs/openDefault-10.10.0.aar')
+
+}

@@ -27,7 +27,7 @@ include ':lib_base_module'
 //图片选择模块
 include ':lib_picture'
 //分享登录基础模块
-include ':lib_share'
+include ':lib_umeng'
 
 //业务模块
 include ':module_main'

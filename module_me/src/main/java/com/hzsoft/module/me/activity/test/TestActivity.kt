@@ -1,5 +1,6 @@
 package com.hzsoft.module.me.activity.test
 
+import android.Manifest
 import android.content.Context
 import android.content.Intent
 import android.view.View
@@ -8,6 +9,7 @@ import android.widget.EditText
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
+import com.hzsoft.lib.base.module.router.ArouterTurn
 import com.hzsoft.lib.base.utils.ToastUtil
 import com.hzsoft.lib.base.view.BaseActivity
 import com.hzsoft.lib.picture.manager.FullyGridLayoutManager
@@ -21,6 +23,10 @@ import com.luck.picture.lib.decoration.GridSpacingItemDecoration
 import com.luck.picture.lib.entity.LocalMedia
 import com.luck.picture.lib.utils.DensityUtil
 import com.luck.picture.lib.utils.MediaUtils
+import com.tbruyelle.rxpermissions2.RxPermissions
+import com.zx.lib.share.ShearEnum
+import com.zx.lib.share.listener.ShareResultCallBack
+import com.zx.lib.share.service.AShareService
 
 class TestActivity : BaseActivity(),View.OnClickListener{
     companion object {
@@ -96,6 +102,7 @@ class TestActivity : BaseActivity(),View.OnClickListener{
    override fun initListener() {
         findViewById<Button>(R.id.button_3).setOnClickListener(this::onClick)
         findViewById<Button>(R.id.button_4).setOnClickListener(this::onClick)
+        findViewById<Button>(R.id.button_5).setOnClickListener(this::onClick)
     }
 
     override fun onClick(v: View?) {
@@ -110,6 +117,29 @@ class TestActivity : BaseActivity(),View.OnClickListener{
             }
             R.id.button_4 -> {
                 RoomTestActivity.start(this)
+            }
+            R.id.button_5 -> {
+               var rxPermission= RxPermissions(this)
+                    .request(Manifest.permission.WRITE_EXTERNAL_STORAGE).subscribe { permission ->
+                        if (permission) {
+                           AShareService.showShareView(supportFragmentManager,
+                                "这是分享内容",
+                                "这是分享标题",
+                                "https://github.com/JoneYng",
+                                "",
+                                ShearEnum.ShareContentTypeEnum.OTHER,
+                                null,
+                                "",
+                                object : ShareResultCallBack {
+                                    override fun onShareClick(type: ShearEnum.SharePlatType) {
+                                    }
+
+                                    override fun onShareCancel() {
+                                    }
+                                })
+                        }
+                    }
+
             }
         }
     }

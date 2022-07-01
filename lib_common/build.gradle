@@ -9,6 +9,7 @@ dependencies {
     api project(":lib_base")
     api project(":lib_net")
     api project(":lib_picture")
+    api project(":lib_umeng")
 
     api deps.rxpermissions
     api deps.MultiImageSelector

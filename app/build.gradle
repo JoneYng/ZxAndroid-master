@@ -2,7 +2,7 @@ plugins {
     id 'com.android.application'
 }
 apply from: "../base.build.gradle"
-
+apply plugin: 'walle'
 android {
 
     signingConfigs {
@@ -24,11 +24,9 @@ android {
             abiFilters "armeabi-v7a"
         }
 
-        manifestPlaceholders = [
-                UMENG_APPKEY           : "",//友盟APPKEY
-                UMENG_CHANNEL          : "",//友盟
-        ]
         signingConfig signingConfigs.release
+        //友盟QQ配置
+         manifestPlaceholders = [qqappid: "101375266"]
     }
 
     //打包改名
@@ -61,6 +59,7 @@ android {
         // for view binding :
         // viewBinding = true
     }
+
 }
 
 dependencies {

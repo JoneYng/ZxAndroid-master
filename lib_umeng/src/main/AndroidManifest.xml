@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.zx.lib.share">
+    <application>
+    <!-- 友盟推送 -->
+    <activity
+        android:name=".activity.PushNotifyActivity"
+        android:exported="true"
+        android:launchMode="singleTask" />
+
+    </application>
+</manifest>

@@ -97,32 +97,37 @@ deps.skeleton = "com.ethanhua:skeleton:1.1.2"
 // 主要是动画的实现
 deps.shimmerlayout = "io.supercharge:shimmerlayout:2.1.0"
 
-ext.deps = deps
+//美团瓦力打包
+def walleVersion = "1.1.6"
+//美团瓦力打包
+deps.walle = "com.meituan.android.walle:library:$walleVersion"
 
-// 图片选择版本
-// https://github.com/LuckSiege/PictureSelector/wiki/PictureSelector-3.0-%E5%8A%9F%E8%83%BDapi%E8%AF%B4%E6%98%8E
-def pictures = [:]
-def pictureVersion = "v3.10.2"
-//图片选择
-pictures.picture_library = "io.github.lucksiege:pictureselector:$pictureVersion"
-// 图片压缩 (按需引入)
-pictures.picture_compress = "io.github.lucksiege:compress:$pictureVersion"
-// 图片裁剪 (按需引入)
-pictures.picture_ucrop = "io.github.lucksiege:ucrop:$pictureVersion"
-// 自定义相机 (按需引入) 最小版本21暂不引入
-pictures.picture_camerax = "io.github.lucksiege:camerax:$pictureVersion"
-ext.pictures = pictures
+ext.deps = deps
 
 
 ext {
-//友盟相关
+    // 图片选择版本
+    def pictureVersion = "v3.10.2"
+    // https://github.com/LuckSiege/PictureSelector/wiki/PictureSelector-3.0-%E5%8A%9F%E8%83%BDapi%E8%AF%B4%E6%98%8E
+    picture = [
+            //图片选择
+            "picture_library" : "io.github.lucksiege:pictureselector:$pictureVersion",
+            // 图片压缩 (按需引入)
+            "picture_compress": "io.github.lucksiege:compress:$pictureVersion",
+            // 图片裁剪 (按需引入)
+            "picture_ucrop"   : "io.github.lucksiege:ucrop:$pictureVersion",
+            // 自定义相机 (按需引入) 最小版本21暂不引入
+            // "picture_camerax"      : "io.github.lucksiege:camerax:$pictureVersion",
+    ]
+
+    //友盟相关
     def commonVersion = "9.5.0"
     def asmsVersion = "1.4.0"
     def apmVersion = "1.4.0"
     def pushVersion = "6.5.1"
     def shareCoreVersion = "7.1.5"
-// 图片选择版本
-     umsdk = [
+    // 图片选择版本
+    umsdk = [
             // 必选
             "common"    : "com.umeng.umsdk:common:$commonVersion",
             "asms"      : "com.umeng.umsdk:asms:$asmsVersion",
@@ -142,5 +147,24 @@ ext {
             "qqopensdk" : "com.tencent.tauth:qqopensdk:3.53.0",
             //新浪微博完整版
             "share-sina": "com.umeng.umsdk:share-sina:$shareCoreVersion",
+    ]
+
+    umPush = [
+            //小米Push通道
+            "xiaomi"          : 'com.umeng.umsdk:xiaomi-push:3.6.17',
+            "xiaomi-umengaccs": 'com.umeng.umsdk:xiaomi-umengaccs:1.1.0',
+            //华为Push通道
+            "huawei-basetb"   : 'com.umeng.umsdk:huawei-basetb:2.6.3.305',
+            "huawei-pushtb"   : 'com.umeng.umsdk:huawei-pushtb:2.6.3.305',
+            "huawei-umengaccs": 'com.umeng.umsdk:huawei-umengaccs:1.2.1',
+            //魅族Push通道
+            "meizu-push"      : 'com.umeng.umsdk:meizu-push:4.0.7',
+            "meizu-umengaccs" : 'com.umeng.umsdk:meizu-umengaccs:1.1.4',
+            //Oppo Push通道
+            "oppo-push"       : 'com.umeng.umsdk:oppo-push:2.1.0',
+            "oppo-umengaccs"  : 'com.umeng.umsdk:oppo-umengaccs:1.0.7-fix',
+            //vivo Push通道
+            "vivo-push"       : 'com.umeng.umsdk:vivo-push:3.0.0',
+            "vivo-umengaccs"  : 'com.umeng.umsdk:vivo-umengaccs:1.1.4',
     ]
 }
