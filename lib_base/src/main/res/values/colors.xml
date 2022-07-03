@@ -5,7 +5,7 @@
     <color name="colorAccent">@color/tab_selected</color> <!--控制各个空间被选中时的颜色-->
     <!--    <color name="textColorPrimary">@color/color_333</color>-->
 
-    <color name="main_color">#1976D2</color>
+    <color name="main_color">#004CD4</color>
     <color name="main_text_color">#888888</color>
 
     <color name="theme">#0000ff</color>
