@@ -3,10 +3,10 @@ package com.hzsoft.module.home.adapter
 import com.bumptech.glide.Glide
 import com.chad.library.adapter.base.viewholder.BaseDataBindingHolder
 import com.hzsoft.lib.base.adapter.BaseSkeletonAdapter
-import com.hzsoft.lib.domain.entity.Demo
-import com.hzsoft.lib.net.utils.ext.view.showToast
+import com.zx.lib.domain.entity.Demo
 import com.hzsoft.module.home.R
 import com.hzsoft.module.home.databinding.ItemRecipeBinding
+import com.zx.lib.net.utils.ext.view.showToast
 
 /**
  * Describe:

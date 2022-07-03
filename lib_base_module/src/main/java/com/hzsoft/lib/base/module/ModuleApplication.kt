@@ -2,7 +2,7 @@ package com.hzsoft.lib.base.module
 
 import com.hzsoft.lib.base.BaseApplication
 import com.hzsoft.lib.common.URL_BASE
-import com.hzsoft.lib.net.config.NetConfig
+import com.zx.lib.net.config.NetConfig
 
 /**
  * 初始化应用程序

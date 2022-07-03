@@ -3,8 +3,8 @@ package com.hzsoft.module.me.adapter
 import com.bumptech.glide.Glide
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.hzsoft.lib.base.adapter.BaseSkeletonAdapter
-import com.hzsoft.lib.net.local.entity.UserTestRoom
 import com.hzsoft.module.me.R
+import com.zx.lib.net.local.entity.UserTestRoom
 
 /**
  *

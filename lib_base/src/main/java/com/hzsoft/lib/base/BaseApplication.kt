@@ -8,7 +8,7 @@ import androidx.multidex.MultiDex
 import com.alibaba.android.arouter.launcher.ARouter
 import com.hzsoft.lib.base.utils.ThreadUtils
 import com.hzsoft.lib.base.utils.ToastUtil
-import com.hzsoft.lib.log.KLog
+import com.zx.lib.log.KLog
 import com.scwang.smart.refresh.footer.ClassicsFooter
 import com.scwang.smart.refresh.header.ClassicsHeader
 import com.scwang.smart.refresh.layout.SmartRefreshLayout

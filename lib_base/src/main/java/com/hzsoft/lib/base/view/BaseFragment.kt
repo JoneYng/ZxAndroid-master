@@ -23,7 +23,7 @@ import com.hzsoft.lib.base.widget.LoadingInitView
 import com.hzsoft.lib.base.widget.LoadingTransView
 import com.hzsoft.lib.base.widget.NetErrorView
 import com.hzsoft.lib.base.widget.NoDataView
-import com.hzsoft.lib.log.KLog
+import com.zx.lib.log.KLog
 import com.trello.rxlifecycle3.components.support.RxAppCompatActivity
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe

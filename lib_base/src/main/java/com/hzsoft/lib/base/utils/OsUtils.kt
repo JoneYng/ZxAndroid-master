@@ -2,7 +2,7 @@ package com.hzsoft.lib.base.utils
 
 import android.os.Build
 import android.text.TextUtils
-import com.hzsoft.lib.log.KLog.e
+import com.zx.lib.log.KLog.e
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader

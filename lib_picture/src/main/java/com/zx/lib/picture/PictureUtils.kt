@@ -7,7 +7,6 @@ import android.net.Uri
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
-import com.hzsoft.lib.picture.R
 import com.zx.lib.picture.manager.GlideEngine
 import com.luck.picture.lib.basic.PictureSelector
 import com.luck.picture.lib.config.PictureMimeType

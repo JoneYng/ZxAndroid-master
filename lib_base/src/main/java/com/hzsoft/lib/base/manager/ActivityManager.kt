@@ -6,7 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import com.hzsoft.lib.base.BaseApplication
-import com.hzsoft.lib.log.KLog
+import com.zx.lib.log.KLog
 import java.util.*
 import kotlin.system.exitProcess
 
