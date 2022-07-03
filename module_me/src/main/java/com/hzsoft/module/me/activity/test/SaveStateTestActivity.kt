@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.widget.Button
 import android.widget.TextView
-import com.hzsoft.lib.base.view.BaseMvvmActivity
+import com.zx.lib.base.view.BaseMvvmActivity
 import com.hzsoft.module.me.R
 
 /**

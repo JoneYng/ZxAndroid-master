@@ -1,8 +1,6 @@
 package debug
 
 import android.app.Application
-import com.zx.lib.net.config.NetConfig
-import com.hzsoft.lib.common.URL_BASE
 
 /**
  * Description: <><br>

@@ -1,7 +1,7 @@
 package com.zx.android
 
-import com.hzsoft.lib.base.manager.ActivityManager
-import com.hzsoft.lib.base.module.ModuleApplication
+import com.zx.lib.base.manager.ActivityManager
+import com.zx.lib.base.module.ModuleApplication
 import com.zx.lib.share.UmengUtils
 
 /**

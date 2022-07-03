@@ -2,9 +2,9 @@ package com.hzsoft.module.home.fragment
 
 import android.view.View
 import com.hzsoft.module.home.adapter.MainHomeAdapter
-import com.hzsoft.lib.base.utils.ThreadUtils
-import com.hzsoft.lib.base.view.BaseMvvmRefreshDataBindingFragment
-import com.hzsoft.lib.common.utils.EnvironmentUtil
+import com.zx.lib.base.utils.ThreadUtils
+import com.zx.lib.base.view.BaseMvvmRefreshDataBindingFragment
+import com.zx.lib.common.utils.EnvironmentUtil
 import com.zx.lib.domain.entity.Demo
 import com.zx.lib.log.KLog
 import com.hzsoft.module.home.BR
@@ -48,7 +48,7 @@ class MainHomeFragment :
         mAdapter = MainHomeAdapter()
         mAdapter.bindSkeletonScreen(
             mBinding.mRecyclerView,
-            com.hzsoft.lib.base.R.layout.skeleton_default_service_item,
+            R.layout.skeleton_default_service_item,
             8
         )
     }

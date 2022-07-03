@@ -1,7 +1,7 @@
 package com.hzsoft.module.me.activity.test
 
 import androidx.lifecycle.SavedStateHandle
-import com.hzsoft.lib.base.mvvm.viewmodel.BaseViewModel
+import com.zx.lib.base.mvvm.viewmodel.BaseViewModel
 
 /**
  *

@@ -9,8 +9,8 @@ import android.widget.EditText
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
-import com.hzsoft.lib.base.utils.ToastUtil
-import com.hzsoft.lib.base.view.BaseActivity
+import com.zx.lib.base.utils.ToastUtil
+import com.zx.lib.base.view.BaseActivity
 import com.zx.lib.picture.manager.FullyGridLayoutManager
 import com.zx.lib.picture.PictureUtils
 import com.zx.lib.picture.adapter.GridImageAdapter

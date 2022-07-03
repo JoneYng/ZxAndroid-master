@@ -5,11 +5,11 @@ import android.view.View
 import android.widget.TextView
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
-import com.hzsoft.lib.base.utils.ThreadUtils
-import com.hzsoft.lib.base.view.BaseFragment
-import com.hzsoft.lib.base.view.BaseMvvmRefreshActivity
-import com.hzsoft.lib.common.utils.VibrateTool
-import com.hzsoft.lib.common.wight.CommonDialogFragment
+import com.zx.lib.base.utils.ThreadUtils
+import com.zx.lib.base.view.BaseFragment
+import com.zx.lib.base.view.BaseMvvmRefreshActivity
+import com.zx.lib.common.utils.VibrateTool
+import com.zx.lib.common.wight.CommonDialogFragment
 import com.zx.lib.log.KLog
 import com.zx.lib.net.dto.Resource
 import com.zx.lib.net.local.entity.UserTestRoom
@@ -104,7 +104,7 @@ class RoomTestActivity : BaseMvvmRefreshActivity<UserTestRoom, RoomTestViewModel
         mAdapter = RoomTestAdapter()
         mAdapter.bindSkeletonScreen(
             findViewById(R.id.mRecyclerView),
-            com.hzsoft.lib.base.R.layout.skeleton_default_service_item,
+            R.layout.skeleton_default_service_item,
             8
         )
         mAdapter.setOnItemLongClickListener { _, _, position ->

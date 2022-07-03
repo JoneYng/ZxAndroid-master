@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
-import com.hzsoft.lib.base.mvvm.viewmodel.BaseRefreshViewModel
+import com.zx.lib.base.mvvm.viewmodel.BaseRefreshViewModel
 import com.zx.lib.domain.entity.Demo
 import com.zx.lib.net.DataRepository
 import com.zx.lib.net.DataRepositorySource

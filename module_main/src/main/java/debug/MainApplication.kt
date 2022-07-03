@@ -1,7 +1,7 @@
 package debug
 
-import com.hzsoft.lib.base.module.ModuleApplication
-import com.hzsoft.lib.common.URL_BASE
+import com.zx.lib.base.module.ModuleApplication
+import com.zx.lib.common.URL_BASE
 import com.zx.lib.net.config.NetConfig
 
 /**

@@ -2,7 +2,7 @@ package com.hzsoft.module.me.fragment
 
 import android.view.View
 import android.widget.Button
-import com.hzsoft.lib.base.view.BaseFragment
+import com.zx.lib.base.view.BaseFragment
 import com.hzsoft.module.me.R
 import com.hzsoft.module.me.activity.test.TestActivity
 
