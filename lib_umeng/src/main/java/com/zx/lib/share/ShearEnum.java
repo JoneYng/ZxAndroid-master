@@ -34,6 +34,9 @@ public class ShearEnum {
         }
     }
 
+    /**
+     * 分享平台
+     */
     public enum SharePlatType {
 
         SINA(1),
