@@ -12,6 +12,30 @@ object ShareConstant {
     /**
      * 友盟相关配置信息
      */
+    //友盟 app key  58512226c62dca4c18000ba3
+    var UMAppKey = "58512226c62dca4c18000ba3"
+
+    //友盟 Push推送业务的secret
+    var UMSecret = "f8c1edb7c18cc74b53bef8d741919db7"
+
+    /**
+     * 推送相关 厂商通道相关配置
+     */
+    //小米
+    val XiaomiId = "2882303761517771534"
+    val XiaomiKey = "5691777145534"
+
+    //魅族
+    val MeiZuAppId = "1007012"
+    val MeiZuAppKey = "4a2ff703bead47c59d1b3e7c5818287b"
+
+    //Oppo
+    val OppoAppKey = "81aZ4TQSknC4g008gowWs8s4S"
+    val OppoAppSecret = "69cd6Ac0C15690850E435Cf016adD8d6"
+
+    /**
+     * 分享、三方登录相关
+     */
     //友盟微信配置
     var WeixinID = "wx9af9b57fa99042f5"
     var WeixinSecret = "f89725582f66ed27ae17239f0de57431"
@@ -33,18 +57,15 @@ object ShareConstant {
     /**
      * 微信包名
      */
-    @JvmField
     var APP_PACKAGE_NAME_WEIXIN = "com.tencent.mm"
 
     /**
      * 微信包名
      */
-    @JvmField
     var APP_PACKAGE_NAME_QQ = "com.tencent.mobileqq"
 
     /**
      * 微博包名
      */
-    @JvmField
     var APP_PACKAGE_NAME_SINA = "com.sina.weibo"
 }

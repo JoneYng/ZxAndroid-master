@@ -9,12 +9,11 @@ import android.widget.EditText
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
-import com.hzsoft.lib.base.module.router.ArouterTurn
 import com.hzsoft.lib.base.utils.ToastUtil
 import com.hzsoft.lib.base.view.BaseActivity
-import com.hzsoft.lib.picture.manager.FullyGridLayoutManager
-import com.hzsoft.lib.picture.PictureUtils
-import com.hzsoft.lib.picture.adapter.GridImageAdapter
+import com.zx.lib.picture.manager.FullyGridLayoutManager
+import com.zx.lib.picture.PictureUtils
+import com.zx.lib.picture.adapter.GridImageAdapter
 import com.hzsoft.module.me.R
 import com.luck.picture.lib.basic.PictureSelector
 import com.luck.picture.lib.config.PictureConfig
@@ -46,7 +45,7 @@ class TestActivity : BaseActivity(),View.OnClickListener{
     //开启返回按钮
     override fun enableToolBarLeft(): Boolean = true
     override fun onBindLayout(): Int {
-        return  R.layout.activity_test;
+        return  R.layout.activity_test
     }
 
     override fun initView() {
@@ -84,7 +83,7 @@ class TestActivity : BaseActivity(),View.OnClickListener{
         mAdapter.selectMax = maxSelectNum + maxSelectVideoNum
         mRecyclerView.adapter = mAdapter
 
-        mAdapter.setOnItemClickListener(object :GridImageAdapter.OnItemClickListener{
+        mAdapter.setOnItemClickListener(object : GridImageAdapter.OnItemClickListener{
             override fun onItemClick(v: View?, position: Int) {
                 PictureUtils.picturePreviewLocalMedia(this@TestActivity,position,mAdapter.data)
             }

@@ -16,6 +16,14 @@ import com.umeng.message.entity.UMessage
 import com.umeng.socialize.PlatformConfig
 import com.umeng.socialize.UMShareAPI
 import com.umeng.socialize.UMShareConfig
+import com.zx.lib.share.ShareConstant.MeiZuAppId
+import com.zx.lib.share.ShareConstant.MeiZuAppKey
+import com.zx.lib.share.ShareConstant.OppoAppKey
+import com.zx.lib.share.ShareConstant.OppoAppSecret
+import com.zx.lib.share.ShareConstant.UMAppKey
+import com.zx.lib.share.ShareConstant.UMSecret
+import com.zx.lib.share.ShareConstant.XiaomiId
+import com.zx.lib.share.ShareConstant.XiaomiKey
 import org.android.agoo.huawei.HuaWeiRegister
 import org.android.agoo.mezu.MeizuRegister
 import org.android.agoo.oppo.OppoRegister
@@ -31,49 +39,22 @@ import org.android.agoo.xiaomi.MiPushRegistar
  */
 object UmengUtils {
 
-    /**
-     * 友盟相关配置信息
-     */
-    //友盟 app key  58512226c62dca4c18000ba3
-    var UMAppKey = "58512226c62dca4c18000ba3"
-
-    //友盟 Push推送业务的secret
-    var UMSecret = "f8c1edb7c18cc74b53bef8d741919db7"
-
-    /**
-     * 厂商通道相关配置
-     */
-    //小米
-    val XiaomiId = "2882303761517771534"
-    val XiaomiKey = "5691777145534"
-
-    //魅族
-    val MeiZuAppId = "1007012"
-    val MeiZuAppKey = "4a2ff703bead47c59d1b3e7c5818287b"
-
-    //Oppo
-    val OppoAppKey = "81aZ4TQSknC4g008gowWs8s4S"
-    val OppoAppSecret = "69cd6Ac0C15690850E435Cf016adD8d6"
-
-
     // preInit预初始化函数耗时极少，不会影响App首次冷启动用户体验
     fun preInit(context: Context) {
         val channel: String = getChannel(context)
         //解决推送消息显示乱码的问题
         PushAgent.setup(
             context,
-            UMAppKey,
+           UMAppKey,
             UMSecret
         )
         UMConfigure.preInit(context,UMAppKey, channel)
     }
     //初始化
-    fun init(context: Application) {
+    fun init(context: Application,) {
         //配置了微信、QQ/Qzone、新浪的三方appkey，如果使用其他平台，在这里增加对应平台key配置
         initShareSdk()
         uMConfigInit(context)
-        uMPushAgentInit(context)
-        PushAgent.getInstance(context).onAppStart()
     }
 
     /**
@@ -85,7 +66,6 @@ object UmengUtils {
      * 参数5:Push推送业务的secret
      */
     private fun uMConfigInit(context: Context) {
-
         val channel = getChannel(context)
         UMConfigure.init(
             context,
@@ -113,8 +93,9 @@ object UmengUtils {
 
     /**
      * 初始化友盟推送
+     * @param alias 注册别名
      */
-    private fun uMPushAgentInit(context: Application) {
+    private fun uMPushAgentInit(context: Application,alias:String) {
         // 有盟推送
         val mPushAgent = PushAgent.getInstance(context)
         // 注册推送服务，每次调用register方法都会回调该接口
@@ -122,10 +103,8 @@ object UmengUtils {
             override fun onSuccess(deviceToken: String) {
                 //注册成功会返回device token
                 Log.e("uMPushAgentinit", deviceToken)
-//                if (UserManager.getInstance().isUserLogin) {
-//                    //友盟 别名绑定
-//                   uMAddAlias(context.baseContext)
-//                }
+                //友盟 别名绑定
+                uMAddAlias(context,alias)
             }
 
             override fun onFailure(s: String, s1: String) {
@@ -166,10 +145,10 @@ object UmengUtils {
     /**
      * 友盟 别名绑定
      */
-    fun uMAddAlias(context: Context) {
+    fun uMAddAlias(context: Context,alias:String) {
         PushAgent.getInstance(context)
             .addAlias(
-                "UserID", "ALIAS_TYPE.APP",
+                alias, "ALIAS_TYPE.APP",
                 ICallBack { isSuccess, message -> Log.e("deviceToken",
                     "addAlias=====$isSuccess") })
     }
@@ -177,9 +156,9 @@ object UmengUtils {
     /**
      *友盟 删除别名
      */
-    fun deleteAlias(context: Context){
+    fun deleteAlias(context: Context,alias:String){
         PushAgent.getInstance(context).deleteAlias(
-            "UserID", "ALIAS_TYPE.APP",
+            alias, "ALIAS_TYPE.APP",
             ICallBack { isSuccess, message -> Log.e("Push", "deleteAlias=====$isSuccess") })
     }
 

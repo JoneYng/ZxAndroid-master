@@ -1,9 +1,3 @@
-/**
- * Copyright ? 2014年3月21日 eduu.com.Co.,Ltd
- * kaoyan 下午7:34:19
- * Version TODO
- * All right reserved.
- */
 package com.zx.lib.share
 
 import android.app.Activity
@@ -23,11 +17,9 @@ import android.text.TextUtils
 import java.io.File
 
 /**
- *
+ * 分享SDK工具类
  */
 class ShareSDKUtil {
-
-
 
 
     companion object {
@@ -59,6 +51,7 @@ class ShareSDKUtil {
                 .share()
         }
         /**
+         * 分享到QQ
          * @param context
          * @param paListener
          * @param title
@@ -91,6 +84,7 @@ class ShareSDKUtil {
         }
 
         /**
+         * 分享到QQ空间
          * @param context
          * @param paListener
          * @param title
@@ -123,6 +117,7 @@ class ShareSDKUtil {
         }
 
         /**
+         * 分享到微信
          * @param context
          * @param paListener
          * @param title
@@ -155,6 +150,7 @@ class ShareSDKUtil {
         }
 
         /**
+         * 分享到微信朋友圈
          * @param context
          * @param paListener
          * @param title
@@ -188,7 +184,6 @@ class ShareSDKUtil {
 
         /**
          * 设置图片 并返回是否是网络图片
-         *
          * @param activity
          * @param imageUrl
          * @return

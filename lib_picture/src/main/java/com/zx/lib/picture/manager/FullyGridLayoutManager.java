@@ -1,4 +1,4 @@
-package com.hzsoft.lib.picture.manager;
+package com.zx.lib.picture.manager;
 
 import android.content.Context;
 import android.view.View;

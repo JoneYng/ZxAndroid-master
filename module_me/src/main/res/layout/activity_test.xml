@@ -12,21 +12,9 @@
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:overScrollMode="never"
-        app:layout_constraintBottom_toTopOf="@+id/textView"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/dp_10"
-        android:gravity="center"
-        android:text="测试 SavedStateHandle 页面带值跳转持久化"
-        android:textSize="@dimen/sp_14"
-        app:layout_constraintBottom_toTopOf="@+id/editText"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="@dimen/dp_100"
-        tools:layout_editor_absoluteX="23dp" />
 
     <EditText
         android:id="@+id/editText"
@@ -37,7 +25,7 @@
         android:textColor="@color/color_333"
         android:textSize="@dimen/sp_14"
         android:layout_marginTop="@dimen/dp_10"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/recycler"
         app:layout_constraintVertical_bias="0.775"
         tools:layout_editor_absoluteX="22dp" />
 

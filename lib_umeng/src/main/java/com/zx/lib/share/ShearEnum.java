@@ -1,9 +1,8 @@
 package com.zx.lib.share;
 
 /**
- * Created by colin on 17/3/15.
+ * 分享类型枚举
  */
-
 public class ShearEnum {
 
     /**

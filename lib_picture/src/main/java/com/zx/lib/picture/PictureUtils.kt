@@ -1,4 +1,4 @@
-package com.hzsoft.lib.picture
+package com.zx.lib.picture
 
 import android.app.Activity
 import android.content.Context
@@ -7,7 +7,8 @@ import android.net.Uri
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
-import com.hzsoft.lib.picture.manager.GlideEngine
+import com.hzsoft.lib.picture.R
+import com.zx.lib.picture.manager.GlideEngine
 import com.luck.picture.lib.basic.PictureSelector
 import com.luck.picture.lib.config.PictureMimeType
 import com.luck.picture.lib.config.PictureSelectionConfig.selectorStyle
