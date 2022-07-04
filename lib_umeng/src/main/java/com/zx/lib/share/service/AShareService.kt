@@ -1,6 +1,10 @@
 package com.zx.lib.share.service
 
+import android.app.Activity
 import androidx.fragment.app.FragmentManager
+import com.umeng.socialize.UMAuthListener
+import com.umeng.socialize.UMShareAPI
+import com.umeng.socialize.bean.SHARE_MEDIA
 import com.zx.lib.share.ShearEnum
 import com.zx.lib.share.fragment.ShareCommonViewFragment
 import com.zx.lib.share.listener.ShareResultCallBack
@@ -40,5 +44,24 @@ object AShareService {
             )
         shareCommonViewFragment.setShareResultCallback(shareResultCallBack)
         shareCommonViewFragment.show(fragmentManager, "ShareCommonViewFragment")
+    }
+
+    /**
+     * 微信登录
+     */
+    fun onWeChatClick(context:Activity,authListener: UMAuthListener) {
+        UMShareAPI.get(context).getPlatformInfo(context, SHARE_MEDIA.WEIXIN, authListener)
+    }
+    /**
+     *QQ登录
+     */
+    fun onQQClick(context:Activity,authListener: UMAuthListener) {
+        UMShareAPI.get(context).getPlatformInfo(context, SHARE_MEDIA.QQ, authListener)
+    }
+    /**
+     *微博登录
+     */
+    fun onWeiboClick(context:Activity,authListener: UMAuthListener) {
+        UMShareAPI.get(context).getPlatformInfo(context, SHARE_MEDIA.SINA, authListener)
     }
 }

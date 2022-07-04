@@ -27,3 +27,75 @@ AShareService.showShareView(supportFragmentManager,
                                     }
                                 })
 ```
+#三方登录
+```
+fun onWeChatClick(context:Activity,authListener: UMAuthListener) {
+    UMShareAPI.get(context).getPlatformInfo(context, SHARE_MEDIA.WEIXIN, authListener)
+}
+
+fun onQQClick(context:Activity,authListener: UMAuthListener) {
+    UMShareAPI.get(context).getPlatformInfo(context, SHARE_MEDIA.QQ, authListener)
+}
+
+fun onWeiboClick(context:Activity,authListener: UMAuthListener) {
+    UMShareAPI.get(context).getPlatformInfo(context, SHARE_MEDIA.SINA, authListener)
+}
+
+override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data)
+    }
+
+/**
+ * 三方登录回调
+ */
+private val authListener: UMAuthListener = object : UMAuthListener {
+    private var uid: String? = ""
+    private var openIdWx: String? = ""
+    private var thirdLoginType: Int = 1
+    private var thirdLoginAvatar: String? = ""
+    private var thirdLoginNickName: String? = ""
+    
+    override fun onStart(paramSHARE_MEDIA: SHARE_MEDIA?) {
+    }
+
+    override fun onComplete(paramSHARE_MEDIA: SHARE_MEDIA?, paramInt: Int, paramMap: MutableMap<String, String>?) {
+        paramMap?.let {
+            when (paramSHARE_MEDIA) {
+                SHARE_MEDIA.WEIXIN -> {
+                    uid = paramMap["unionid"]
+                    openIdWx = paramMap["openid"]
+                    thirdLoginType = ParamsLoginHandler.THIRD_TYPE_WX
+                    thirdLoginAvatar = paramMap["profile_image_url"]
+                    thirdLoginNickName = paramMap["name"]
+                }
+
+                SHARE_MEDIA.QQ -> {
+                    uid = paramMap["uid"]
+                    thirdLoginType = ParamsLoginHandler.THIRD_TYPE_QQ
+                    thirdLoginAvatar = paramMap["profile_image_url"]
+                    thirdLoginNickName = paramMap["name"]
+
+                }
+
+                SHARE_MEDIA.SINA -> {
+                    uid = paramMap["uid"]
+                    thirdLoginType = ParamsLoginHandler.THIRD_TYPE_WB
+                    thirdLoginAvatar = paramMap["profile_image_url"]
+                    thirdLoginNickName = paramMap["name"]
+                }
+
+                else -> {
+                }
+            }
+
+        }
+    }
+
+    override fun onCancel(SHARE_MEDIA: SHARE_MEDIA?, paramInt: Int) {
+    }
+
+    override fun onError(paramSHARE_MEDIA: SHARE_MEDIA?, paramInt: Int, paramThrowable: Throwable?) {
+    }
+}
+```
