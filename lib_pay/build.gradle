@@ -12,6 +12,6 @@ dependencies {
     api deps.wechatSdk
     //android系统依赖
     api deps.androidx_appcompat
-    implementation 'com.google.android.material:material:1.4.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    api deps.android_material
+    api deps.constraintlayout
 }
