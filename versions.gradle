@@ -101,6 +101,8 @@ deps.shimmerlayout = "io.supercharge:shimmerlayout:2.1.0"
 def walleVersion = "1.1.6"
 //美团瓦力打包
 deps.walle = "com.meituan.android.walle:library:$walleVersion"
+//微信SDK
+deps.wechatSdk="com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+"
 
 ext.deps = deps
 

@@ -26,6 +26,7 @@ import com.tbruyelle.rxpermissions2.RxPermissions
 import com.zx.lib.share.ShearEnum
 import com.zx.lib.share.listener.ShareResultCallBack
 import com.zx.lib.share.service.AShareService
+import com.zx.pay.PayMainActivity
 
 class TestActivity : BaseActivity(),View.OnClickListener{
     companion object {
@@ -101,6 +102,7 @@ class TestActivity : BaseActivity(),View.OnClickListener{
         findViewById<Button>(R.id.button_3).setOnClickListener(this::onClick)
         findViewById<Button>(R.id.button_4).setOnClickListener(this::onClick)
         findViewById<Button>(R.id.button_5).setOnClickListener(this::onClick)
+        findViewById<Button>(R.id.button_6).setOnClickListener(this::onClick)
     }
 
     override fun onClick(v: View?) {
@@ -138,6 +140,9 @@ class TestActivity : BaseActivity(),View.OnClickListener{
                         }
                     }
 
+            }
+            R.id.button_6 -> {
+                startActivity(Intent(this@TestActivity,PayMainActivity::class.java))
             }
         }
     }

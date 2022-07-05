@@ -28,6 +28,8 @@ include ':lib_base_module'
 include ':lib_picture'
 //分享登录基础模块
 include ':lib_umeng'
+//支付模块
+include ':lib_pay'
 
 //业务模块
 include ':module_main'

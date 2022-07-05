@@ -1,0 +1,17 @@
+apply from: "../lib.build.gradle"
+apply plugin: 'org.jetbrains.kotlin.android'
+
+android {
+
+}
+
+dependencies {
+    //支付宝支付库
+    implementation files('libs/alipaysdk-noutdid-15.8.03.210428205839.aar')
+    //微信sdk
+    api deps.wechatSdk
+    //android系统依赖
+    api deps.androidx_appcompat
+    implementation 'com.google.android.material:material:1.4.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+}

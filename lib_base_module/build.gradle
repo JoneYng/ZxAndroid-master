@@ -28,6 +28,7 @@ android {
 dependencies {
     api project(":lib_picture")
     api project(":lib_umeng")
+    api project(":lib_pay")
 
     api project(":lib_common")
     kapt deps.arouter_compiler
