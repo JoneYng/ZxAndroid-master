@@ -15,6 +15,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:allowBackup">
+        <!--平板 平行世界适配-->
+        <meta-data
+            android:name="EasyGoClient"
+            android:value="true" />
         <activity
             android:name="com.tencent.tauth.AuthActivity"
             android:launchMode="singleTask"

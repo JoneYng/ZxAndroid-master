@@ -1,0 +1,26 @@
+{
+  "easyGoVersion": "1.0",
+  "client": "com.zx.android",
+  "logicEntities": [
+    {
+      "head": {
+        "function": "magicwindow",
+        "required": "true"
+      },
+      "body": {
+        "mode": "1",
+        "activityPairs": [
+          {
+            "from": "com.hzsoft.module.main.MainActivity", // 触发分屏的源Activity，不支持通配符
+            "to": "*" // 触发分屏的目标Activity，支持通配符，“*”表示任意Activity
+          }
+        ],
+        "transActivities": [],
+        "UX": {
+          "isDraggable": "false", // true 为可以拖拽，false 为不可拖拽
+          "showStatusBar": "true" // 是否显示状态栏
+        }
+      }
+    }
+  ]
+}
