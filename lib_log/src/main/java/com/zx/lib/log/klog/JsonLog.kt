@@ -1,9 +1,9 @@
-package com.hzsoft.lib.base.utils.log.klog
+package com.zx.lib.log.klog
 
 import android.util.Log
 
 import com.zx.lib.log.KLog
-import com.hzsoft.lib.base.utils.log.KLogUtil
+import com.zx.lib.log.KLogUtil
 
 import org.json.JSONArray
 import org.json.JSONException

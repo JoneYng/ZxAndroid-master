@@ -1,4 +1,4 @@
-package com.hzsoft.lib.base.utils.log
+package com.zx.lib.log
 
 import android.text.TextUtils
 import android.util.Log

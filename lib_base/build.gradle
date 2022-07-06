@@ -24,8 +24,11 @@ android {
         // viewBinding = true
     }
 }
+def refreshSdk = rootProject.ext.umPush
 
 dependencies {
+    //下拉刷新库
+    refreshSdk.each { k, v -> api v }
 
     api project(":lib_log")
 
@@ -58,14 +61,6 @@ dependencies {
     api deps.activity_ktx
     api deps.fragment_ktx
 
-    api deps.refresh_layout_kernel
-    api deps.refresh_header_classics
-    api deps.refresh_header_radar
-    api deps.refresh_header_falsify
-    api deps.refresh_header_material
-    api deps.refresh_header_two_level
-    api deps.refresh_footer_ball
-    api deps.refresh_footer_classics
 
     api deps.skeleton
     api deps.shimmerlayout
