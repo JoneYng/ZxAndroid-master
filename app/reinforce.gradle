@@ -23,9 +23,9 @@ ext {
     //签名
     SIGN_JAR = rootDir.getPath() + "/legu/apksigner.jar"
     //腾讯乐固AppId
-    NAME = "AKIDqZP7c7cy7A1iDUYO1RgiaQEtMbdR0LTO"
+    NAME = ""
     //腾讯乐固AppKey
-    PASSWORD = "kFdojYTGqDMI0Tjx2uYx961pRr44sUs1"
+    PASSWORD = ""
 
     SOURCE_APK_PATH = "${project.buildDir}"  //源apk文件路径
     DEFAULT_APK_PATH = "${project.buildDir}/outputs/apk/release" //默认release文件路径
