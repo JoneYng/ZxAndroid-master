@@ -18,14 +18,17 @@ ext {
     ALIAS_PASSWORD = keystoreProperties['ALIAS_PASS']
     //上传到蒲公英的key
     PGY_API_KEY = keystoreProperties['PGY_API_KEY']
+    //腾讯乐固AppId
+    NAME = keystoreProperties['LEGU_APP_ID']
+    //腾讯乐固AppKey
+    PASSWORD =keystoreProperties['LEGU_APP_KEY']
+    //钉钉token
+    DINGDING_TOKEN =keystoreProperties['DINGDING_TOKEN']
     //乐固加固
     JAR = rootDir.getPath() + "/legu/ms-shield.jar"
     //签名
     SIGN_JAR = rootDir.getPath() + "/legu/apksigner.jar"
-    //腾讯乐固AppId
-    NAME = ""
-    //腾讯乐固AppKey
-    PASSWORD = ""
+
 
     SOURCE_APK_PATH = "${project.buildDir}"  //源apk文件路径
     DEFAULT_APK_PATH = "${project.buildDir}/outputs/apk/release" //默认release文件路径
@@ -476,7 +479,7 @@ def dingding(p_title, p_text) {
 
     println("发送钉钉数据：" + json)
 
-//    def url="https://oapi.dingtalk.com/robot/send?access_token=你的token"
+//    def url="https://oapi.dingtalk.com/robot/send?access_token=$DINGDING_TOKEN"
 //    def connection = new URL(url).openConnection()
 //    connection.setRequestMethod('POST')
 //    connection.doOutput = true
