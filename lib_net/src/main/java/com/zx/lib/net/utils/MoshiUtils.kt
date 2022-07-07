@@ -107,3 +107,32 @@ inline fun <reified T : Any> String.fromJson() = MoshiUtils.fromJson<T>(this)
 
 //快捷反序列化
 fun Any.toJson() = MoshiUtils.toJson(this)
+
+
+/**
+使用方法：
+//实体类
+@JsonClass(generateAdapter = true)
+data class Person(val name: String = "Carlson", val age: Int? = 0)
+
+//json
+{"name":"Carlson","age":56}
+
+//实体类转json
+val person = Person("Carlson",56)
+val json = person.toJson()
+
+//json转实体类
+val json = """{"name":"Carlson","age":56}"""
+val person = json.fromJson<Person>()
+
+val listJson = """[{"name":"Carlson","age":56},{"name":"Carlson","age":56},{"name":"Carlson","age":56}]"""
+
+//三种方法都可以
+val list1 = listJson.fromJson<List<Person>>()
+val list2 = MoshiUtils.fromJson<List<Person>>(listJson,Types.newParameterizedType(List::class.java,Person::class.java))
+val list3 = MoshiUtils.listFromJson<Person>(listJson)
+
+//list转json
+val json = list?.toJson()
+ */

@@ -7,7 +7,7 @@ android {
 
 dependencies {
     //支付宝支付库
-    implementation files('libs/alipaysdk-noutdid-15.8.03.210428205839.aar')
+    compileOnly files('libs/alipaysdk-noutdid-15.8.03.210428205839.aar')
     //微信sdk
     api deps.wechatSdk
     //android系统依赖

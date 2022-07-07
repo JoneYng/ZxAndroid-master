@@ -24,7 +24,7 @@ android {
         // viewBinding = true
     }
 }
-def refreshSdk = rootProject.ext.umPush
+def refreshSdk = rootProject.ext.refresh
 
 dependencies {
     //下拉刷新库

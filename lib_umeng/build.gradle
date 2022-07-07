@@ -16,6 +16,6 @@ dependencies {
     //android系统依赖
     api deps.androidx_appcompat
     //微博授权库
-    implementation files('libs/openDefault-10.10.0.aar')
+    compileOnly files('libs/openDefault-10.10.0.aar')
 
 }

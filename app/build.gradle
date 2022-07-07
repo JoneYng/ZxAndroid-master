@@ -3,6 +3,10 @@ plugins {
 }
 apply from: "../base.build.gradle"
 apply plugin: 'walle'
+//多渠道打包插件
+//apply plugin: 'reinforce'
+apply from: 'reinforce.gradle'
+
 android {
 
     signingConfigs {
@@ -39,11 +43,12 @@ android {
         variant.outputs.each { output ->
             if ("release" == buildType) {
                 if (output.outputFileName.endsWith('.apk')) {
-                    output.outputFileName = "${versionName}\\${appName}_${versionCode}_V${versionName}_${outputTime}.apk"
+//                    output.outputFileName = "${versionName}\\${appName}_${versionCode}_V${versionName}_${outputTime}.apk"
+                    output.outputFileName = "${appName}_${versionCode}_${outputTime}.apk"
                 }
             } else {
                 if (output.outputFileName.endsWith('.apk')) {
-                    output.outputFileName = "${appName}_${versionCode}_V${versionName}_debug.apk"
+                    output.outputFileName = "${appName}_${versionCode}_debug.apk"
                 }
             }
         }

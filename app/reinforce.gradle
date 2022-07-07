@@ -1,0 +1,496 @@
+import groovy.json.JsonSlurper
+import java.util.*;
+import java.text.SimpleDateFormat
+
+/*加载keystore.properties信息到该gradle文件中*/
+def keystorePropertiesFile = rootProject.file("gradle.properties")
+def keystoreProperties = new Properties()
+keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+
+ext {
+    //密钥路径
+    KEY_PATH = keystoreProperties['KEY_PATH']
+    //密钥密码
+    KEY_PASSWORD = keystoreProperties['KAY_PASS']
+    //密钥别名
+    ALIAS = keystoreProperties['ALIAS_NAME']
+    //别名密码
+    ALIAS_PASSWORD = keystoreProperties['ALIAS_PASS']
+    //上传到蒲公英的key
+    PGY_API_KEY = keystoreProperties['PGY_API_KEY']
+    //乐固加固
+    JAR = rootDir.getPath() + "/legu/ms-shield.jar"
+    //签名
+    SIGN_JAR = rootDir.getPath() + "/legu/apksigner.jar"
+    //腾讯乐固AppId
+    NAME = "AKIDqZP7c7cy7A1iDUYO1RgiaQEtMbdR0LTO"
+    //腾讯乐固AppKey
+    PASSWORD = "kFdojYTGqDMI0Tjx2uYx961pRr44sUs1"
+
+    SOURCE_APK_PATH = "${project.buildDir}"  //源apk文件路径
+    DEFAULT_APK_PATH = "${project.buildDir}/outputs/apk/release" //默认release文件路径
+    DEFAULT_APK_PATH_DEBUG = "${project.buildDir}/outputs/apk/debug" //默认debug文件路径
+    /*多渠道打包*/
+    WALLE_JAR = "${project.rootDir}/walle-cli-all.jar"
+    WALLE_CHANNELS_CONFIG = "${project.rootDir}/app/channel"  //渠道配置文件
+    CHANNEL_APKS_PATH = "${project.buildDir}/outputs/channels"  //渠道Apk输出路径
+}
+
+/**
+ * 设置apk输出名称
+ * @return
+ */
+String getApkName() {
+    // Apk名称 可自定义
+    return "app_release_" + getApkVersionName()
+}
+
+/**
+ * 清空上一次生成的渠道包
+ * @param channelApkPath 渠道包目录地址
+ * @return
+ */
+def cleanFilesPath(channelApkPath) {
+    println(channelApkPath)
+    println(rootProject.buildDir.getPath())
+    delete channelApkPath
+//    delete SOURCE_APK_PATH
+    delete rootProject.buildDir
+}
+
+/**
+ * 获取android sdk目录
+ * @return 返回sdk下build-tools 项目使用版本的目录
+ */
+String getAndroidSdkPath() {
+    File sdkDir = android.getSdkDirectory()
+    return sdkDir.getAbsolutePath() + "/build-tools/${rootProject.build_versions.build_sdk}/"
+}
+
+/**
+ * 获取app版本信息
+ * @return 返回版本信息+版本号
+ */
+String getApkVersionName() {
+    def version = rootProject.app_version.version_name.replace(".", "")
+    return version + "_" + rootProject.app_version.version_code
+}
+
+/**
+ * 根据操作系统 获取命令提示符
+ * windows powershell
+ * Mac OS  bash
+ * Linux   sh
+ * Mac 是用sh也是可以的
+ * @return
+ */
+static String getCommand() {
+    if (isWindows()) {
+        return "powershell"
+    } else {
+        return "sh"
+    }
+}
+
+
+/**
+ * 加固后的apk 对齐压缩
+ * @param apk 已加固apk
+ * @return 返回对齐压缩后的apk
+ */
+def zipAlignApk(File apk) {
+    if (apk == null || !apk.exists()) {
+        println "---zipalign reinforceApk throw exception and forced stop!---"
+        throw new FileNotFoundException('apk is not exists and cannot reinforce')
+    }
+    def BUILD_TOOL_PATH = getAndroidSdkPath()
+    def APK_NAME = getApkName() + "_jiagu_zip.apk"
+    def file = new File("${SOURCE_APK_PATH}/${APK_NAME}")
+    if (file.exists()) {
+        file.delete()
+    }
+    println "BUILD_TOOL_PATH:$BUILD_TOOL_PATH"
+    println "BUILD_APK_PATH:${apk.getPath()}"
+    println "BUILD_APK_PATH:${SOURCE_APK_PATH}/${APK_NAME}"
+    exec {
+        if (isWindows()) {
+            commandLine "powershell", rootDir.getPath() + "/legu/zipalign", "-v", "-p", "4", apk.getPath(), SOURCE_APK_PATH + "/" + APK_NAME
+        } else {
+            commandLine getCommand(), "-c", "${BUILD_TOOL_PATH}zipalign -v -p 4 ${apk.getPath()} ${SOURCE_APK_PATH}/${APK_NAME}"
+        }
+    }
+}
+
+/**
+ * 对apk签名
+ * @param zipApk 压缩对齐后的apk
+ * @return 签名后的apk
+ */
+def signApkV2(File zipApk) {
+    if (zipApk == null || !zipApk.exists()) {
+        println "---sign zipApk throw exception and forced stop!---"
+        throw new FileNotFoundException('apk is not exists and cannot reinforce')
+    }
+    def BUILD_TOOL_PATH = getAndroidSdkPath()
+    def APK_NAME = getApkName() + "_jiagu_zip_sign.apk"
+    def file = new File("${SOURCE_APK_PATH}/${APK_NAME}")
+    if (file.exists()) {
+        file.delete()
+    }
+    println "SIGN_JAR:$SIGN_JAR"
+    exec {
+        if (isWindows()) {
+            commandLine "powershell", "java", "-jar", SIGN_JAR, "sign", "--ks", KEY_PATH, "--ks-key-alias", ALIAS, "--ks-pass", "pass:" + KEY_PASSWORD, "--key-pass", "pass:" + ALIAS_PASSWORD, "--out", SOURCE_APK_PATH + "/" + APK_NAME, zipApk
+        } else {
+            commandLine "java", "-jar", SIGN_JAR, "sign", "--ks", KEY_PATH, "--ks-key-alias", ALIAS, "--ks-pass", "pass:" + KEY_PASSWORD, "--key-pass", "pass:" + ALIAS_PASSWORD, "--out", SOURCE_APK_PATH + "/" + APK_NAME, zipApk
+        }
+//        commandLine getCommand(), "-c", "${BUILD_TOOL_PATH}apksigner sign --ks ${KEY_PATH} --ks-key-alias ${ALIAS} --ks-pass pass:${KEY_PASSWORD} --key-pass pass:${ALIAS_PASSWORD} --out ${SOURCE_APK_PATH}/${APK_NAME} ${zipApk}"
+    }
+}
+
+/**
+ * 对签名后的apk添加渠道信息
+ * @param apk 已签名apk
+ * @return 添加渠道信息后的apk
+ */
+def buildChannelApks(File apk) {
+    if (apk == null || !apk.exists()) {
+        println "---Channel build Apk throw exception and forced stop!---"
+        throw new FileNotFoundException('apk is not exists and cannot reinforce')
+    }
+    def file = new File(CHANNEL_APKS_PATH)
+    if (!file.exists()) {
+        file.mkdir()
+    }
+    def APK_NAME = getApkName() + "_jiagu_zip_sign.apk"
+
+    exec {
+        //java -jar walle-cli-all.jar batch -f /Users/Meituan/walle/app/channel  /Users/Meituan/walle/app/build/outputs/apk/app.apk
+        commandLine getCommand(), "-c", "java -jar ${WALLE_JAR} batch -f ${WALLE_CHANNELS_CONFIG} ${SOURCE_APK_PATH}/${APK_NAME} ${CHANNEL_APKS_PATH}"
+    }
+}
+
+
+/**
+ * 重命名apk
+ * @param path 渠道apk目录路径
+ * @return
+ */
+def renameChannelApkFiles(path) {
+//    def APK_NAME = "app-release_" + getApkVersionName() + "_jiagu_zip_sign.apk"
+    def regex = getApkName() + "_jiagu_zip_sign"
+    def dir = new File(path + "/")
+    dir.listFiles().each { file ->
+        if (file.name =~ /${regex}.*\.apk/) {
+            String newName = file.name
+            newName = newName.replaceAll(~/_jiagu/, "")
+            newName = newName.replaceAll(~/_zip/, "")
+            newName = newName.replaceAll(~/_sign/, "")
+            file.renameTo(new File(file.getParent(), newName))
+        }
+    }
+}
+
+/**
+ * 查找apk
+ * @param path
+ * @param suffix
+ * @return
+ */
+static File findApkFile(path, suffix) {
+    def dir = new File(path)
+    return dir.listFiles().find { it.isFile() && it =~ /.*${suffix}\.apk/ }
+}
+
+
+static Boolean isWindows() {
+    // mac  Mac OS X
+    // windows Windows
+    return System.properties['os.name'].contains('Windows')
+}
+
+/**
+ * 正式包
+ */
+task ZxAndroidRelease() {
+    group 'ZxAndroid'
+    dependsOn("assembleRelease")
+}
+/**
+ * 打包测试环境apk 上传蒲公英 并通知钉钉
+ */
+task ZxAndroidDebugUpload() {
+    group 'ZxAndroid'
+    dependsOn("assembleDebug")
+    doLast {
+        uploadApk()
+    }
+}
+
+class ApkFile {
+    String channel
+    File file
+}
+/**
+ * 查找所有apk
+ * @param buildType release 或者 debug
+ * @return ArrayList <ApkFile>
+ */
+def findApkFiles(String buildType) {
+    println "findApkFiles buildType: " + buildType
+    println "findApkFiles buildType: " + buildDir.getPath() + "/outputs/apk"
+    println "findApkFiles buildType: "
+
+    File apkDir = new File(buildDir.getPath() + "/outputs/apk")
+
+    File[] channelDirs = apkDir.listFiles()
+
+    println apkDir.getAbsolutePath()
+    List<ApkFile> apkFiles = new ArrayList<>()
+    for (int i = 0; i < channelDirs.length; i++) {
+        File channelDir = channelDirs[i]
+        ApkFile apkFile = new ApkFile()
+        apkFile.channel = channelDir.name
+        println "findApkFiles name: " + channelDir.name
+        if (!channelDir.name.contains(buildType)) {
+            continue
+        }
+        println "findApkFiles channelDir.getPath: " + channelDir.getPath()
+
+        File[] files = new File(channelDir.getPath()).listFiles()
+        println "findApkFiles files: " + files
+
+        if (files == null || files.length == 0) {
+            continue
+        }
+        for (int j = 0; j < files.length; j++) {
+            File lastFile = files[j]
+            if (!lastFile.name.endsWith(".apk")) {
+                continue
+            }
+            apkFile.file = lastFile
+            apkFiles.add(apkFile)
+        }
+    }
+    return apkFiles
+}
+/**
+ * 乐固加固
+ * @param apk 加固的原始apk File
+ * @param outputPath 输出目录
+ * @param channel 原始渠道(baidu,yyb,...)
+ */
+def reinforce(apk, outputPath, channel) {
+
+    println "reinforce apk:" + apk
+    println "reinforce apk:" + channel
+
+    //jiagu.db中缓存了多渠道信息，如果不删除会合并到当前多渠道配置
+    def shield = new File(JAR)
+    if (!shield.exists()) {
+        throw new RuntimeException("jar not exists!")
+    }
+//    println NAME
+//    println PASSWORD
+//    println apk
+//    println outputPath
+    exec {
+        if (isWindows()) {
+            commandLine "powershell", "java -jar", JAR, "-sid", NAME, "-skey", PASSWORD, "-uploadPath", apk, "-downloadPath", outputPath
+        } else {
+            commandLine "java", "-Dfile.encoding=utf-8", "-jar", shield.getAbsolutePath(), "-sid", NAME, "-skey", PASSWORD, "-uploadPath", apk, "-downloadPath", outputPath
+        }
+    }
+}
+/**
+ * 乐固加固+重新签名+美团walle渠道打包+上传到蒲公英
+ */
+task ZxAndroidReinforceRelease() {
+    group 'ZxAndroid'
+    dependsOn("assembleRelease")
+    doLast {
+       List<ApkFile> apkFiles = findApkFiles("release")
+        if (apkFiles.size() == 0) {
+            throw new RuntimeException("no apk files has found!")
+        }
+        File outputDir = new File(DEFAULT_APK_PATH)
+        println outputDir.getPath()
+        println "*************** start legu reinforce ***************"
+        for (int i = 0; i < apkFiles.size(); i++) {
+            ApkFile apkFile = apkFiles.get(i)
+            println "getAbsolutePath:"+apkFile.file.getAbsolutePath()
+            reinforce(apkFile.file.getAbsolutePath(), outputDir.getAbsolutePath(), apkFile.channel)
+        }
+        cleanFilesPath(CHANNEL_APKS_PATH)   //清空上一次生成的渠道包
+        def reinforceApk = findApkFile(DEFAULT_APK_PATH, "_legu")  //寻找已加固的apk包
+        if (reinforceApk != null) {
+            println "--加固的APP--\n" + reinforceApk
+//            zipAlignApk(reinforceApk) // zip对齐
+//            def zipAlignApk = findApkFile(SOURCE_APK_PATH, "_zip")
+            signApkV2(reinforceApk)  //使用V2重签名
+            def signatureApk = findApkFile(SOURCE_APK_PATH, "_sign")
+            if (signatureApk != null) {
+                buildChannelApks(signatureApk)  //执行多渠道打包
+                renameChannelApkFiles(CHANNEL_APKS_PATH) //重命名渠道包
+            }
+        }
+    }
+}
+
+
+//自动上传到蒲公英
+def uploadApk() {
+    //查找等待上传的apk文件
+    //正常打包可以在debug和relase下找到，但是多渠道打包，需要选择正确的渠道路径
+    def apkDir = new File(DEFAULT_APK_PATH_DEBUG)
+
+    if (!apkDir.exists()) {
+        throw new RuntimeException("apk outputs path not exists!")
+    }
+    def apk = null
+    for (int i = apkDir.listFiles().length - 1; i >= 0; i--) {
+        File file = apkDir.listFiles()[i]
+        if (file.name.endsWith(".apk")) {
+            apk = file
+            break
+        }
+    }
+
+    if (apk == null) {
+        throw new RuntimeException("apk file not exists!")
+    }
+
+    println "*********************************** start upload file ******************************************"
+
+    def twoHyphens = "--"
+    def boundary = "*********"
+    def end = "\r\n"
+
+    //蒲公英API上传接口   https://www.pgyer.com/doc/view/api#uploadApp  官方文档地址
+    def conn = new URL("https://www.pgyer.com/apiv2/app/upload").openConnection()
+    conn.setRequestMethod("POST")
+    conn.setRequestProperty("Connection", "Keep-Alive")
+    conn.setRequestProperty("Charset", "UTF-8")
+    conn.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary)
+    conn.setDoInput(true)
+    conn.setDoOutput(true)
+
+    /**
+     * 蒲公英为测试账号
+     */
+    //添加参数：_api_key
+    def sb = new StringBuilder()
+    sb.append(twoHyphens).append(boundary).append(end)
+    sb.append("Content-Disposition: form-data; name=_api_key")
+    sb.append(end).append(end)
+    sb.append(PGY_API_KEY).append(end)
+
+    //添加参数：buildUpdateDescription 更新日志，取值git
+//    sb.append(twoHyphens).append(boundary).append(end)
+//    sb.append("Content-Disposition: form-data; name=buildUpdateDescription")
+//    sb.append(end).append(end)
+//    sb.append(getGitVersionInfo()).append(end)
+
+    //添加参数：buildInstallType 设置密码安装
+//    sb.append(twoHyphens).append(boundary).append(end)
+//    sb.append("Content-Disposition: form-data; name=buildInstallType")
+//    sb.append(end).append(end)
+//    sb.append(2).append(end)
+
+    //添加参数：buildPassword 设置密码  cfss1234  fgbp1234
+//    sb.append(twoHyphens).append(boundary).append(end)
+//    sb.append("Content-Disposition: form-data; name=buildPassword")
+//    sb.append(end).append(end)
+//    sb.append("自己的提取密码").append(end)
+
+    //添加参数file: 需要上传的apk文件
+    sb.append(twoHyphens).append(boundary).append(end)
+    sb.append("Content-Disposition: form-data; name=file;filename=").append(apk.getName())
+    sb.append(end).append(end)
+
+    def dos = new DataOutputStream(conn.getOutputStream())
+    dos.writeBytes(sb.toString())
+    dos.flush()
+    sb.delete(0, sb.length())
+
+    def fis = new FileInputStream(apk)
+    byte[] bf = new byte[8192]
+    int len
+    while ((len = fis.read(bf)) != -1) {
+        dos.write(bf, 0, len)
+    }
+    sb.append(end)
+    sb.append(twoHyphens).append(boundary).append(end)
+    dos.writeBytes(sb.toString())
+
+    dos.flush()
+    fis.close()
+    dos.close()
+    conn.connect()
+
+    def text = conn.getContent().text
+    def resp = new groovy.json.JsonSlurper().parseText(text)
+
+    println text
+    println "***********************************  upload finish ******************************************"
+
+    if (resp.code != 0) {
+        throw new RuntimeException(resp.message)
+    }
+
+    //解析蒲公英上传返回数据
+    //apk下载地址
+    def apkDownloadUrl = "https://www.pgyer.com/" + resp.data.buildShortcutUrl
+
+    def time = resp.data.buildCreated
+    def buildQRCodeURL = resp.data.buildQRCodeURL
+    def buildName = resp.data.buildName
+    def buildVersion = resp.data.buildVersion
+
+    println("apk下载地址" + apkDownloadUrl)
+    println("apk二维码地址：" + buildQRCodeURL)
+
+    dingding("应用更新提醒", "### 【" + buildName + "】构建成功" +
+            "\n\n构建版本：" + buildVersion +
+            "\n\n应用类型：Android" +
+            "\n\n下载地址：\n[下载地址](" + apkDownloadUrl + ")" +
+            "\n\n![](" + buildQRCodeURL + ")" +
+            "\n\n构建时间：" + time)
+}
+
+//发送钉钉消息
+def dingding(p_title, p_text) {
+    println("--------------------------" + p_title + p_text)
+    def json = new groovy.json.JsonBuilder()
+    json {
+        msgtype "markdown"
+        markdown {
+            title p_title
+            text p_text
+        }
+        at {
+            atMobiles([])
+            isAtAll false
+        }
+    }
+
+    println("发送钉钉数据：" + json)
+
+//    def url="https://oapi.dingtalk.com/robot/send?access_token=你的token"
+//    def connection = new URL(url).openConnection()
+//    connection.setRequestMethod('POST')
+//    connection.doOutput = true
+//    connection.setRequestProperty('Content-Type', 'application/json')
+//
+//    def writer = new OutputStreamWriter(connection.outputStream)
+//    writer.write(json.toString());
+//    writer.flush()
+//    writer.close()
+//    connection.connect()
+//    def respText = connection.content.text
+//   println("钉钉返回结果："+respText )
+}
+
+def getGitVersionInfo() {
+    return 'git log -n 1'.execute().text.trim()
+}
