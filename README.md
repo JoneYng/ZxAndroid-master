@@ -12,7 +12,7 @@ __reinforce.gradle 打包插件__
 >相关配置文件 gradle.properties
 ``` 
 # 蒲公英key
-PGY_API_KEY=089d32e81fcee0b92cc3b404e8c0dca4
+PGY_API_KEY= ""
 # 乐固AppId
 LEGU_APP_ID = ""
 # 乐固AppKey
