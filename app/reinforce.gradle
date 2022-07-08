@@ -306,7 +306,7 @@ def reinforce(apk, outputPath, channel) {
     }
 }
 /**
- * 乐固加固+重新签名+美团walle渠道打包+上传到蒲公英
+ * 乐固加固+重新签名+美团walle渠道打包
  */
 task ZxAndroidReinforceRelease() {
     group 'ZxAndroid'
