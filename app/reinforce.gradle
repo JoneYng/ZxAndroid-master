@@ -34,7 +34,7 @@ ext {
     DEFAULT_APK_PATH = "${project.buildDir}/outputs/apk/release" //默认release文件路径
     DEFAULT_APK_PATH_DEBUG = "${project.buildDir}/outputs/apk/debug" //默认debug文件路径
     /*多渠道打包*/
-    WALLE_JAR = "${project.rootDir}/walle-cli-all.jar"
+    WALLE_JAR = rootDir.getPath() +"/legu/walle-cli-all.jar"
     WALLE_CHANNELS_CONFIG = "${project.rootDir}/app/channel"  //渠道配置文件
     CHANNEL_APKS_PATH = "${project.buildDir}/outputs/channels"  //渠道Apk输出路径
 }
@@ -224,8 +224,10 @@ task ZxAndroidRelease() {
  */
 task ZxAndroidDebugUpload() {
     group 'ZxAndroid'
+    //生成debug包
     dependsOn("assembleDebug")
     doLast {
+        //上传apk文件到蒲公英平台，并发送钉钉通知
         uploadApk()
     }
 }
@@ -310,8 +312,10 @@ def reinforce(apk, outputPath, channel) {
  */
 task ZxAndroidReinforceRelease() {
     group 'ZxAndroid'
+    //生成release包
     dependsOn("assembleRelease")
     doLast {
+        //找到release文件
        List<ApkFile> apkFiles = findApkFiles("release")
         if (apkFiles.size() == 0) {
             throw new RuntimeException("no apk files has found!")
@@ -322,15 +326,19 @@ task ZxAndroidReinforceRelease() {
         for (int i = 0; i < apkFiles.size(); i++) {
             ApkFile apkFile = apkFiles.get(i)
             println "getAbsolutePath:"+apkFile.file.getAbsolutePath()
+            //乐固上传加固
             reinforce(apkFile.file.getAbsolutePath(), outputDir.getAbsolutePath(), apkFile.channel)
         }
-        cleanFilesPath(CHANNEL_APKS_PATH)   //清空上一次生成的渠道包
-        def reinforceApk = findApkFile(DEFAULT_APK_PATH, "_legu")  //寻找已加固的apk包
+        //清空上一次生成的渠道包
+        cleanFilesPath(CHANNEL_APKS_PATH)
+        //寻找已加固的apk包
+        def reinforceApk = findApkFile(DEFAULT_APK_PATH, "_legu")
         if (reinforceApk != null) {
             println "--加固的APP--\n" + reinforceApk
 //            zipAlignApk(reinforceApk) // zip对齐
 //            def zipAlignApk = findApkFile(SOURCE_APK_PATH, "_zip")
-            signApkV2(reinforceApk)  //使用V2重签名
+            //使用V2重签名
+            signApkV2(reinforceApk)
             def signatureApk = findApkFile(SOURCE_APK_PATH, "_sign")
             if (signatureApk != null) {
                 buildChannelApks(signatureApk)  //执行多渠道打包
