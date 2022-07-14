@@ -11,14 +11,14 @@
         android:layout_marginBottom="10dip"
         android:background="#ffffff"
         android:orientation="vertical">
-
-        <Button
+        <TextView
             android:id="@+id/btn_take_photo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dip"
             android:layout_marginRight="5dip"
             android:layout_marginBottom="5dip"
+            android:gravity="center"
             android:background="@null"
             android:minWidth="0dp"
             android:minHeight="0dp"
@@ -31,7 +31,7 @@
             android:layout_height="1px"
             android:background="#c8c7cc" />
 
-        <Button
+        <TextView
             android:id="@+id/btn_select_photo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -42,11 +42,16 @@
             android:minWidth="0dp"
             android:minHeight="0dp"
             android:padding="13dip"
+            android:gravity="center"
             android:text="从手机相册选择"
             android:textSize="15sp" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="#c8c7cc" />
     </LinearLayout>
 
-    <Button
+    <TextView
         android:id="@+id/btn_cancel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -54,6 +59,7 @@
         android:background="#ffffff"
         android:padding="13dp"
         android:text="取消"
+        android:gravity="center"
         android:textSize="15sp" />
 
 </LinearLayout>

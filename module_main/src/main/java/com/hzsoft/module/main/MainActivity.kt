@@ -3,7 +3,6 @@ package com.hzsoft.module.main
 import androidx.fragment.app.Fragment
 import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.zx.lib.base.module.provider.ICalendarProvider
 import com.zx.lib.base.module.provider.IHomeProvider
 import com.zx.lib.base.module.provider.IMeProvider
 import com.zx.lib.base.module.router.ARouterConfig.Companion.FRAGMENT_HOME_MAIN

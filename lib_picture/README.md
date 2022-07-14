@@ -89,4 +89,22 @@ private fun analyticalSelectResults(result: ArrayList<LocalMedia>) {
         mAdapter.notifyItemRangeInserted(0, result.size)
     }
 }
+/**
+ * 单张图片选择
+ */
+//当前已选择图片
+private var mSelectMedias:  ArrayList<LocalMedia?>? = null
+val mPhotoSelectDialog = PhotoSelectDialog.newInstance()
+            mPhotoSelectDialog.showNow(requireFragmentManager(), "MainMeFragment")
+            //设置当前选中图片
+            mPhotoSelectDialog.setSelectMedias(mSelectMedias)
+            mPhotoSelectDialog.setOnClickListener(object :
+                PhotoSelectDialog.OnPhotoClickListener{
+                override fun onTakePhotoClick(path: ArrayList<LocalMedia?>?) {
+                    mSelectMedias=path
+                }
+                override fun onSelectPhotoClick(list: ArrayList<LocalMedia?>?) {
+                    mSelectMedias=list
+                }
+            })
 ```

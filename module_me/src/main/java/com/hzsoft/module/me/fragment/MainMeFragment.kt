@@ -5,6 +5,9 @@ import android.widget.Button
 import com.zx.lib.base.view.BaseFragment
 import com.hzsoft.module.me.R
 import com.hzsoft.module.me.activity.test.TestActivity
+import com.luck.picture.lib.entity.LocalMedia
+import com.zx.lib.common.wight.SettingBarView
+import com.zx.lib.picture.view.PhotoSelectDialog
 
 /**
  * Describe:
@@ -47,6 +50,7 @@ class MainMeFragment : BaseFragment() {
             R.id.button_1 -> {
                 TestActivity.start(mContext)
             }
+
         }
     }
 }

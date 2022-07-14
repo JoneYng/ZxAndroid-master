@@ -11,7 +11,6 @@ dependencies {
 
 
     api deps.rxpermissions
-    api deps.MultiImageSelector
 
     api deps.glide
     kapt deps.glide_compiler

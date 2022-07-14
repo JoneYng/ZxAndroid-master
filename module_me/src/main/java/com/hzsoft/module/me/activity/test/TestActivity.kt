@@ -9,11 +9,6 @@ import android.widget.EditText
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
-import com.zx.lib.base.utils.ToastUtil
-import com.zx.lib.base.view.BaseActivity
-import com.zx.lib.picture.manager.FullyGridLayoutManager
-import com.zx.lib.picture.PictureUtils
-import com.zx.lib.picture.adapter.GridImageAdapter
 import com.hzsoft.module.me.R
 import com.luck.picture.lib.basic.PictureSelector
 import com.luck.picture.lib.config.PictureConfig
@@ -23,6 +18,14 @@ import com.luck.picture.lib.entity.LocalMedia
 import com.luck.picture.lib.utils.DensityUtil
 import com.luck.picture.lib.utils.MediaUtils
 import com.tbruyelle.rxpermissions2.RxPermissions
+import com.zx.lib.base.utils.ToastUtil
+import com.zx.lib.base.view.BaseActivity
+import com.zx.lib.common.utils.ext.view.loadImage
+import com.zx.lib.common.wight.SettingBarView
+import com.zx.lib.picture.PictureUtils
+import com.zx.lib.picture.adapter.GridImageAdapter
+import com.zx.lib.picture.manager.FullyGridLayoutManager
+import com.zx.lib.picture.view.PhotoSelectDialog
 import com.zx.lib.share.ShearEnum
 import com.zx.lib.share.listener.ShareResultCallBack
 import com.zx.lib.share.service.AShareService
@@ -41,6 +44,9 @@ class TestActivity : BaseActivity(),View.OnClickListener{
     private val mData: List<LocalMedia> = ArrayList()
     private val maxSelectNum = 9
     private val maxSelectVideoNum = 1
+
+    private var mSelectMedias:  ArrayList<LocalMedia?>? = null
+
     override fun getTootBarTitle(): String = "测试一下"
 
     //开启返回按钮
@@ -52,7 +58,33 @@ class TestActivity : BaseActivity(),View.OnClickListener{
     override fun initView() {
         editText = findViewById(R.id.editText)
         mRecyclerView = findViewById(R.id.recycler)
-
+       val mSettingBarView=  findViewById<SettingBarView>(R.id.SettingBarView)
+        mSettingBarView  .setOnClickSettingBarViewListener(object :
+            SettingBarView.OnClickSettingBarViewListener {
+            override fun onClick() {
+                val mPhotoSelectDialog = PhotoSelectDialog.newInstance()
+                mPhotoSelectDialog.showNow(supportFragmentManager, "MainMeFragment")
+                //设置当前选中图片
+                mPhotoSelectDialog.setSelectMedias(mSelectMedias)
+                mPhotoSelectDialog.setOnClickListener(object :
+                    PhotoSelectDialog.OnPhotoClickListener{
+                    override fun onTakePhotoClick(path: ArrayList<LocalMedia?>?) {
+                        mSelectMedias=path
+                        if(path!=null&&path.size>0){
+                            val path: String = path[0]!!.availablePath
+                            mSettingBarView.imgLeftIcon?.loadImage(path)
+                        }
+                    }
+                    override fun onSelectPhotoClick(path: ArrayList<LocalMedia?>?) {
+                        mSelectMedias=path
+                        if(path!=null&&path.size>0){
+                            val path: String = path[0]!!.availablePath
+                            mSettingBarView.imgLeftIcon?.loadImage(path)
+                        }
+                    }
+                })
+            }
+        })
 
 //        List<LocalMedia> list = new ArrayList<>();
 //        list.add(LocalMedia.generateLocalMedia("https://fdfs.test-kepu.weiyilewen.com/group1/M00/00/01/wKhkY2Iv936EMKWzAAAAAHuLNY8762.mp4", PictureMimeType.ofMP4()));

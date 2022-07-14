@@ -12,11 +12,6 @@ interface ARouterConfig {
         const val FRAGMENT_HOME_MAIN = "/home/main"
 
         /**
-         * 日历服务
-         */
-        const val FRAGMENT_CALENDAR_MAIN = "/calendar/main"
-
-        /**
          * 个人中心服务
          */
         const val FRAGMENT_ME_MAIN = "/me/main"

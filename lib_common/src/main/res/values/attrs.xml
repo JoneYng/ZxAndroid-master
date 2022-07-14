@@ -40,12 +40,12 @@
         <attr name="expandToggleOnTextClick" format="boolean"/>
     </declare-styleable>
     <declare-styleable name="SettingBarView">
-        <attr name="set_left_icon_visable" format="boolean" />
+        <attr name="set_left_icon_visible" format="boolean" />
         <attr name="set_left_icon" format="reference" />
         <attr name="set_title" format="string" />
         <attr name="set_content" format="string" />
         <attr name="set_content_hint" format="string" />
-        <attr name="set_right_icon_visable" format="boolean" />
+        <attr name="set_right_icon_visible" format="boolean" />
         <attr name="set_right_icon" format="reference" />
     </declare-styleable>
 </resources>

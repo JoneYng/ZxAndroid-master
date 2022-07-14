@@ -7,7 +7,6 @@ import android.net.Uri
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
-import com.zx.lib.picture.manager.GlideEngine
 import com.luck.picture.lib.basic.PictureSelector
 import com.luck.picture.lib.config.PictureMimeType
 import com.luck.picture.lib.config.PictureSelectionConfig.selectorStyle
@@ -15,6 +14,7 @@ import com.luck.picture.lib.config.SelectMimeType
 import com.luck.picture.lib.entity.LocalMedia
 import com.luck.picture.lib.interfaces.OnExternalPreviewEventListener
 import com.luck.picture.lib.interfaces.OnMediaEditInterceptListener
+import com.luck.picture.lib.interfaces.OnResultCallbackListener
 import com.luck.picture.lib.style.BottomNavBarStyle
 import com.luck.picture.lib.style.PictureSelectorStyle
 import com.luck.picture.lib.style.SelectMainStyle
@@ -22,6 +22,7 @@ import com.luck.picture.lib.style.TitleBarStyle
 import com.luck.picture.lib.utils.DateUtils
 import com.luck.picture.lib.utils.StyleUtils
 import com.yalantis.ucrop.UCrop
+import com.zx.lib.picture.manager.GlideEngine
 import java.io.File
 
 
@@ -171,6 +172,22 @@ object PictureUtils {
             .setSelectedData(selectMedias)
             .isDirectReturnSingle(true)
             .forResult(requestCode)
+    }
+
+    /**
+     * 选择一张照片 直接返回
+     */
+    fun chooseSinglePic(activity: Activity, selectMedias: List<LocalMedia?>?,callBack:OnResultCallbackListener<LocalMedia?>) {
+        PictureSelector.create(activity)
+            .openGallery(SelectMimeType.ofImage())
+            .setSelectorUIStyle(getStyle(activity))
+            .setImageEngine(GlideEngine.createGlideEngine()) .setMaxSelectNum(1)//图片最大选择数量
+            .isMaxSelectEnabledMask(true)//达到最大选择数是否开启禁选蒙层
+            .isOriginalControl(true)//是否开启原图功能
+            .setEditMediaInterceptListener(getCustomEditMediaEvent(activity))//编辑
+            .setSelectedData(selectMedias)
+            .isDirectReturnSingle(true)
+            .forResult(callBack)
     }
 
     fun getLocalMedia(list: List<String>): ArrayList<LocalMedia> {

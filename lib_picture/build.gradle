@@ -11,6 +11,7 @@ dependencies {
     kapt deps.glide_compiler
     api deps.glide_transformations
 
+    api deps.android_material
     //图片选择库
     apiPicture.each { k, v -> api v }
 

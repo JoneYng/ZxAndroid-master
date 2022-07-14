@@ -9,6 +9,5 @@ package com.hzsoft.module.main.entity
  */
 enum class MainChannel(id: Int, name: String) {
     HOME(0, "HOME"),
-    CALENDER(1, "CALENDER"),
     ME(2, "ME")
 }

@@ -29,7 +29,6 @@ deps.androidx_cardview = "androidx.cardview:cardview:1.0.0"
 
 deps.rxpermissions = "com.github.tbruyelle:rxpermissions:0.10.2"
 deps.eventbus = "org.greenrobot:eventbus:3.2.0"
-deps.MultiImageSelector = "com.github.lovetuzitong:MultiImageSelector:1.2"
 
 // rxlife
 def rxLifecycleVersion = '3.1.0'

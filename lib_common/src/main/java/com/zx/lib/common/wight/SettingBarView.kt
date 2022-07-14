@@ -19,11 +19,11 @@ import com.zx.lib.common.R
  * Update:     <br>
 </SettingBarView> */
 class SettingBarView(context: Context, attrs: AttributeSet) : RelativeLayout(context, attrs) {
-    private val imgLeftIcon: ImageView?
-    private val txtSetTitle: TextView
-    private val txtSetContent: EditText?
-    private val imgRightIcon: ImageView
-    private val layoutSettingBar: RelativeLayout
+    val imgLeftIcon: ImageView?
+    val txtSetTitle: TextView
+    val txtSetContent: EditText?
+    val imgRightIcon: ImageView
+    val layoutSettingBar: RelativeLayout
     private var mOnClickSettingBarViewListener: OnClickSettingBarViewListener? = null
     private var mOnClickRightImgListener: OnClickRightImgListener? = null
     private var isEdit = false//是否需要编辑
@@ -60,8 +60,10 @@ class SettingBarView(context: Context, attrs: AttributeSet) : RelativeLayout(con
         txtSetContent = findViewById(R.id.txt_set_content)
         imgRightIcon = findViewById(R.id.img_right_icon)
         val typedArray = context.obtainStyledAttributes(attrs, R.styleable.SettingBarView)
-        val isVisableLeftIcon = typedArray.getBoolean(R.styleable.SettingBarView_set_left_icon_visable, false)
-        val isVisableRightIcon = typedArray.getBoolean(R.styleable.SettingBarView_set_right_icon_visable, false)
+        val isVisableLeftIcon =
+            typedArray.getBoolean(R.styleable.SettingBarView_set_left_icon_visible, false)
+        val isVisableRightIcon =
+            typedArray.getBoolean(R.styleable.SettingBarView_set_right_icon_visible, false)
         val title = typedArray.getString(R.styleable.SettingBarView_set_title)
         val hint = typedArray.getString(R.styleable.SettingBarView_set_content_hint)
         val content = typedArray.getString(R.styleable.SettingBarView_set_content)
