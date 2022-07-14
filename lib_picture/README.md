@@ -1,4 +1,5 @@
 # lib_picture 图片选择库
+## 多张图片选择
 ``` 
 //LayoutManager 布局管理器
 val manager = FullyGridLayoutManager(
@@ -89,9 +90,11 @@ private fun analyticalSelectResults(result: ArrayList<LocalMedia>) {
         mAdapter.notifyItemRangeInserted(0, result.size)
     }
 }
-/**
- * 单张图片选择
- */
+```
+
+
+## 单张图片选择
+ ```
 //当前已选择图片
 private var mSelectMedias:  ArrayList<LocalMedia?>? = null
 val mPhotoSelectDialog = PhotoSelectDialog.newInstance()
