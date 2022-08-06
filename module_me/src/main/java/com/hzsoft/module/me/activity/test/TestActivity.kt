@@ -135,6 +135,7 @@ class TestActivity : BaseActivity(),View.OnClickListener{
         findViewById<Button>(R.id.button_4).setOnClickListener(this::onClick)
         findViewById<Button>(R.id.button_5).setOnClickListener(this::onClick)
         findViewById<Button>(R.id.button_6).setOnClickListener(this::onClick)
+        findViewById<Button>(R.id.button_7).setOnClickListener(this::onClick)
     }
 
     override fun onClick(v: View?) {
@@ -175,6 +176,25 @@ class TestActivity : BaseActivity(),View.OnClickListener{
             }
             R.id.button_6 -> {
                 startActivity(Intent(this@TestActivity,PayMainActivity::class.java))
+            }
+            R.id.button_7 -> {
+                var rxPermission= RxPermissions(this)
+                    .request(Manifest.permission.WRITE_EXTERNAL_STORAGE).subscribe { permission ->
+                        if (permission) {
+                            AShareService.showShareImageView(supportFragmentManager,
+                                "111",
+                                "222标题",
+                                "https://ark-prod-cdn-images.iqihang.com/image/20220701/e3be639c27e64904b3cd495388b30ec1.jpg",
+                                null,
+                                object : ShareResultCallBack {
+                                    override fun onShareClick(type: ShearEnum.SharePlatType) {
+                                    }
+
+                                    override fun onShareCancel() {
+                                    }
+                                })
+                        }
+                    }
             }
         }
     }

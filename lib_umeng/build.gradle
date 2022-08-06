@@ -16,6 +16,9 @@ dependencies {
     //android系统依赖
     api deps.androidx_appcompat
     //微博授权库
-    compileOnly files('libs/openDefault-10.10.0.aar')
+    api files('libs/openDefault-10.10.0.aar')
 
+    api deps.glide
+    kapt deps.glide_compiler
+    api deps.glide_transformations
 }

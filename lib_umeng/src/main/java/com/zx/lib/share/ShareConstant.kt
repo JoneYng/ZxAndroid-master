@@ -1,6 +1,15 @@
 package com.zx.lib.share
 
 object ShareConstant {
+
+    val SHARE_TITLE = "SHARE_TITLE"
+    val SHARE_URL = "SHARE_URL"
+    val SHARE_IMAGE_URL = "SHARE_IMAGEURL"
+    val SHARE_TEXT = "SHARE_TEXT"
+    val SHARE_TYPE = "SHARE_TYPE"
+    val SHARE_PLAT_TYPE = "SHARE_PLAT_TYPE"
+    val SHARE_VIEW_TITLE = "SHARE_VIEW_TITLE"
+
     // 进行第三方分享操作，默认的图
     var URL_SHARE_DEFAULT_IMAGE =
         "https://ark-prod-cdn-images.iqihang.com/image/20220701/e3be639c27e64904b3cd495388b30ec1.jpg"

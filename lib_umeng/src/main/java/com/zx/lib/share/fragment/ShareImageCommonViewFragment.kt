@@ -4,72 +4,63 @@ package com.zx.lib.share.fragment
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.animation.ObjectAnimator
-import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Base64
 import android.view.*
 import android.widget.Toast
 import android.widget.Toast.LENGTH_SHORT
 import androidx.fragment.app.DialogFragment
+import com.bumptech.glide.Glide
 import com.umeng.socialize.UMShareAPI
 import com.umeng.socialize.UMShareListener
 import com.umeng.socialize.bean.SHARE_MEDIA
+import com.umeng.socialize.media.UMImage
 import com.zx.lib.share.*
 import com.zx.lib.share.ShareConstant.SHARE_IMAGE_URL
 import com.zx.lib.share.ShareConstant.SHARE_PLAT_TYPE
 import com.zx.lib.share.ShareConstant.SHARE_TEXT
 import com.zx.lib.share.ShareConstant.SHARE_TITLE
-import com.zx.lib.share.ShareConstant.SHARE_TYPE
-import com.zx.lib.share.ShareConstant.SHARE_URL
-import com.zx.lib.share.ShareConstant.SHARE_VIEW_TITLE
-import com.zx.lib.share.dialog.LoadingView
 import com.zx.lib.share.listener.ShareResultCallBack
-import kotlinx.android.synthetic.main.select_share_alert_dialog.*
+import kotlinx.android.synthetic.main.select_share_image_alert_dialog.*
+import java.io.File
 
-class ShareCommonViewFragment : DialogFragment(), View.OnClickListener, UMShareListener {
+/**
+ * 分享图片
+ */
+class ShareImageCommonViewFragment : DialogFragment(), View.OnClickListener, UMShareListener {
 
-    private var shareTitle: String? = ""
-    private var shareUrl: String? = ""
     private var imageUrl: String? = ""
     private var shareText: String? = ""
+    private var shareTitle: String? = ""
     private var tempImageUrl: String? = imageUrl
-    private var shareType: String? = ""
     private var sharePlatType: Int? = 0
-    private var mViewTitle: String? = ""
     private var mCallback: ShareResultCallBack? = null
-    private var loadingDialog: LoadingView? = null
-    private var mContext: Context? = null
-
 
     companion object {
-        fun newShareCommonFragmentInstance(
+        fun newShareImageCommonViewFragmentInstance(
             shareText: String?,
             shareTitle: String?,
-            shareUrl: String?,
             shareImage: String?,
-            shareType: ShearEnum.ShareContentTypeEnum,
             platType: ShearEnum.SharePlatType?,
-            viewTitle: String?
-        ): ShareCommonViewFragment {
+        ): ShareImageCommonViewFragment {
             val bundle = Bundle()
             bundle.putString(SHARE_IMAGE_URL, shareImage)
-            bundle.putString(SHARE_TITLE, shareTitle)
-            bundle.putString(SHARE_URL, shareUrl)
             bundle.putString(SHARE_TEXT, shareText)
-            bundle.putString(SHARE_TYPE, shareType.value)
-            bundle.putString(SHARE_VIEW_TITLE, viewTitle)
+            bundle.putString(SHARE_TITLE, shareTitle)
             if (platType != null) {
                 bundle.putInt(SHARE_PLAT_TYPE, platType.value)
             }
-            val fragment = ShareCommonViewFragment()
+            val fragment = ShareImageCommonViewFragment()
             fragment.arguments = bundle
             return fragment
         }
-
     }
 
 
@@ -77,7 +68,6 @@ class ShareCommonViewFragment : DialogFragment(), View.OnClickListener, UMShareL
         setStyle(STYLE_NORMAL, R.style.ShareDialogNoFullScreen)
         super.onCreate(savedInstanceState)
     }
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -106,8 +96,7 @@ class ShareCommonViewFragment : DialogFragment(), View.OnClickListener, UMShareL
         window?.attributes = wlp
         //设置dialog的 进出 动画
         window?.setWindowAnimations(R.style.select_share_dialog_style)
-
-        return inflater.inflate(R.layout.select_share_alert_dialog, container, false)
+        return inflater.inflate(R.layout.select_share_image_alert_dialog, container, false)
     }
 
 
@@ -145,6 +134,8 @@ class ShareCommonViewFragment : DialogFragment(), View.OnClickListener, UMShareL
         share_select_sina.setOnClickListener(this)
         share_select_wechat.setOnClickListener(this)
         share_select_wechatm.setOnClickListener(this)
+
+
     }
 
     private fun initData() {
@@ -153,17 +144,11 @@ class ShareCommonViewFragment : DialogFragment(), View.OnClickListener, UMShareL
             return
         }
 
-        mViewTitle = arguments?.getString(SHARE_VIEW_TITLE, "")
-
-        shareTitle = arguments?.getString(SHARE_TITLE, "")
-
-        shareUrl = arguments?.getString(SHARE_URL, "")
-
         imageUrl = arguments?.getString(SHARE_IMAGE_URL, "")
 
         shareText = arguments?.getString(SHARE_TEXT, "")
 
-        shareType = arguments?.getString(SHARE_TYPE, "")
+        shareTitle = arguments?.getString(SHARE_TITLE, "")
 
         sharePlatType = arguments?.getInt(SHARE_PLAT_TYPE, 0)
 
@@ -172,27 +157,26 @@ class ShareCommonViewFragment : DialogFragment(), View.OnClickListener, UMShareL
         if (TextUtils.isEmpty(shareText)) {
             shareText = getString(R.string.share_null_text)
         }
-        if (!TextUtils.isEmpty(mViewTitle)) {
-            share_toptitle.text = mViewTitle
-        }
 
-        //单独拦截课程分享
-        if (ShearEnum.ShareContentTypeEnum.getTypeEnum(shareType) == ShearEnum.ShareContentTypeEnum.COURSE) {
-            imageUrl = ShareConstant.URL_SHARE_COURSE_IMAGE
-        } else if (TextUtils.isEmpty(imageUrl) || imageUrl!!.startsWith("http://") || imageUrl!!.startsWith(
-                "https://")) {
-            imageUrl = ShareConstant.URL_SHARE_DEFAULT_IMAGE
-        }
-
-        if (TextUtils.isEmpty(shareTitle) && TextUtils.isEmpty(imageUrl)) {
-            Toast.makeText(context, "数据错误", LENGTH_SHORT).show()
-            doDismiss()
-            return
-        }
-        if (TextUtils.isEmpty(shareType)) {
-            Toast.makeText(context, "缺少数据类型", LENGTH_SHORT).show()
-            doDismiss()
-            return
+        imageUrl.let {
+            if (imageUrl!!.startsWith("http://") || imageUrl!!.startsWith("https://")) {
+                Glide.with(this).load(imageUrl).into(img_pop)
+            } else if(ShareSDKUtil.isBase64(imageUrl!!)){
+                //将字符串转换成Bitmap类型
+                var bitmap: Bitmap? = null
+                try {
+                    val bitmapArray = Base64.decode(
+                        imageUrl!!.split(",").toTypedArray().get(1),
+                        Base64.DEFAULT
+                    ) //注意解码的时候要把编码的头（"data:image/png;base64,"）去掉，否则将会失效
+                    bitmap = BitmapFactory.decodeByteArray(bitmapArray, 0, bitmapArray.size)
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+                img_pop.setImageBitmap(bitmap)
+            }else {
+//                umImage = UMImage(activity, File(imageUrl))
+            }
         }
     }
 
@@ -268,7 +252,7 @@ class ShareCommonViewFragment : DialogFragment(), View.OnClickListener, UMShareL
                         requireActivity(),
                         this,
                         shareTitle,
-                        shareUrl,
+                        "",
                         shareText,
                         tempImageUrl!!
                     )
@@ -278,7 +262,7 @@ class ShareCommonViewFragment : DialogFragment(), View.OnClickListener, UMShareL
                         requireActivity(),
                         this,
                         shareTitle,
-                        shareUrl,
+                        "",
                         shareText,
                         tempImageUrl!!
                     )
@@ -289,7 +273,7 @@ class ShareCommonViewFragment : DialogFragment(), View.OnClickListener, UMShareL
                         this,
                         ShareConstant.KAOYANBANG_WEIBO_ACCOUNT.toString() + " " + shareTitle,
                         shareText,
-                        shareUrl!!,
+                        "",
                         tempImageUrl!!
                     )
                 }
@@ -300,7 +284,7 @@ class ShareCommonViewFragment : DialogFragment(), View.OnClickListener, UMShareL
                         shareTitle,
                         shareText,
                         tempImageUrl!!,
-                        shareUrl
+                        ""
                     )
                 }
                 ShearEnum.SharePlatType.WEIMENT -> {
@@ -310,7 +294,7 @@ class ShareCommonViewFragment : DialogFragment(), View.OnClickListener, UMShareL
                         shareTitle,
                         shareText,
                         tempImageUrl!!,
-                        shareUrl
+                        ""
                     )
                 }
             }
@@ -323,13 +307,12 @@ class ShareCommonViewFragment : DialogFragment(), View.OnClickListener, UMShareL
             ).show()
             doDismiss()
         }
-
         doDismiss()
     }
 
 
     private fun doDismiss() {
-//        showEndAnimate()
+        showEndAnimate()
         dismiss()
     }
 
@@ -366,7 +349,6 @@ class ShareCommonViewFragment : DialogFragment(), View.OnClickListener, UMShareL
 
     /**
      * 获取透明动画
-     *
      * @param view
      * @param duration
      * @param isStart
@@ -383,44 +365,19 @@ class ShareCommonViewFragment : DialogFragment(), View.OnClickListener, UMShareL
     }
 
     override fun onStart(p0: SHARE_MEDIA?) {
-        showLoadingView()
+
     }
 
     override fun onResult(p0: SHARE_MEDIA?) {
-        hideLoadingView()
-//        Toast.makeText(requireContext(), getString(R.string.info_operate_success_tip_string), LENGTH_SHORT).show()
         dismiss()
     }
 
     override fun onError(p0: SHARE_MEDIA?, p1: Throwable?) {
-        hideLoadingView()
-//        Toast.makeText(requireContext(),getString(R.string.info_operate_faile_tip_string), LENGTH_SHORT).show()
         dismiss()
 
     }
 
     override fun onCancel(p0: SHARE_MEDIA?) {
-        hideLoadingView()
-//        Toast.makeText(requireContext(),getString(R.string.info_operate_cancle_tip_string), LENGTH_SHORT).show()
         dismiss()
-    }
-
-    fun showLoadingView() {
-//        if (loadingDialog == null) {
-//            loadingDialog = LoadingView(requireContext())
-//        }
-//        if (!loadingDialog!!.isShowing) {
-//            loadingDialog!!.show()
-//        }
-    }
-
-    fun hideLoadingView() {
-//        try {
-//            if (loadingDialog != null && loadingDialog!!.isShowing) {
-//                loadingDialog!!.cancel()
-//            }
-//        } catch (e: Exception) {
-//            loadingDialog = null
-//        }
     }
 }

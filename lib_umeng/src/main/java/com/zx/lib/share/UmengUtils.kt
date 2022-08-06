@@ -89,6 +89,7 @@ object UmengUtils {
         val config = UMShareConfig()
         config.isNeedAuthOnGetUserInfo(true)
         UMShareAPI.get(context).setShareConfig(config)
+        PlatformConfig.setWXFileProvider("com.zx.android.fileprovider")
     }
 
     /**

@@ -2,19 +2,19 @@ package com.zx.lib.share
 
 import android.app.Activity
 import android.content.Context
-import com.umeng.socialize.UMShareListener
-import com.umeng.socialize.ShareAction
-import com.umeng.socialize.bean.SHARE_MEDIA
-import com.umeng.socialize.media.UMWeb
-import com.umeng.socialize.media.UMImage
-import com.zx.lib.share.ShareSDKUtil
-import com.zx.lib.share.ShareConstant
-import android.widget.Toast
-import com.zx.lib.share.R
-import com.umeng.socialize.PlatformConfig
-import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.text.TextUtils
+import android.util.Base64
+import android.widget.Toast
+import com.umeng.socialize.PlatformConfig
+import com.umeng.socialize.ShareAction
+import com.umeng.socialize.UMShareListener
+import com.umeng.socialize.bean.SHARE_MEDIA
+import com.umeng.socialize.media.UMImage
+import com.umeng.socialize.media.UMWeb
 import java.io.File
+import java.util.regex.Pattern
 
 /**
  * 分享SDK工具类
@@ -185,7 +185,7 @@ class ShareSDKUtil {
         /**
          * 设置图片 并返回是否是网络图片
          * @param activity
-         * @param imageUrl
+         * @param imageUrl 支持网络连接，路径，base 64
          * @return
          */
         private fun setShareImageUrl(activity: Activity, imageUrl: String): UMImage? {
@@ -195,12 +195,34 @@ class ShareSDKUtil {
             var umImage: UMImage? = null
             if (imageUrl.startsWith("http://") || imageUrl.startsWith("https://")) {
                 umImage = UMImage(activity, imageUrl)
-            } else {
+            } else if(isBase64(imageUrl)){
+                //将字符串转换成Bitmap类型
+                var bitmap: Bitmap? = null
+                try {
+                    val bitmapArray = Base64.decode(
+                        imageUrl.split(",").toTypedArray().get(1),
+                        Base64.DEFAULT
+                    ) //注意解码的时候要把编码的头（"data:image/png;base64,"）去掉，否则将会失效
+                    bitmap = BitmapFactory.decodeByteArray(bitmapArray, 0, bitmapArray.size)
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+                umImage = UMImage(activity,bitmap)
+            }else {
                 umImage = UMImage(activity, File(imageUrl))
-                umImage.setThumb(UMImage(activity, File(imageUrl)))
             }
+            umImage.setThumb(umImage)
             return umImage
         }
+
+        /**
+         * 是否是Base64位图片
+         */
+         fun  isBase64( str:String):Boolean {
+            val base64Pattern = "^([A-Za-z0-9+/]{4})*([A-Za-z0-9+/]{4}|[A-Za-z0-9+/]{3}=|[A-Za-z0-9+/]{2}==)$"
+            return Pattern.matches(base64Pattern, str);
+        }
+
 
         fun checkWeiXin(context: Context): Boolean {
             val isHave = isHaveInstallApplication(context, ShareConstant.APP_PACKAGE_NAME_WEIXIN)

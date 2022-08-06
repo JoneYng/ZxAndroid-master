@@ -7,6 +7,7 @@ import com.umeng.socialize.UMShareAPI
 import com.umeng.socialize.bean.SHARE_MEDIA
 import com.zx.lib.share.ShearEnum
 import com.zx.lib.share.fragment.ShareCommonViewFragment
+import com.zx.lib.share.fragment.ShareImageCommonViewFragment
 import com.zx.lib.share.listener.ShareResultCallBack
 
 
@@ -44,6 +45,29 @@ object AShareService {
             )
         shareCommonViewFragment.setShareResultCallback(shareResultCallBack)
         shareCommonViewFragment.show(fragmentManager, "ShareCommonViewFragment")
+    }
+
+    /**
+     * 分享弹窗
+     * @param shareText 分享内容
+     * @param shareTitle 分享标题
+     * @param shareImage 分享图片
+     * @param platType 平台类型（QQ、微信、新浪）
+     * @param shareResultCallBack 分享回调
+     */
+    fun showShareImageView(
+        fragmentManager: FragmentManager?, shareText: String?,shareTitle: String?, shareImage: String?,
+        platType: ShearEnum.SharePlatType?,
+        shareResultCallBack: ShareResultCallBack?
+    ) {
+        if (fragmentManager == null || fragmentManager.isDestroyed) {
+            return
+        }
+        val shareImageCommonViewFragment: ShareImageCommonViewFragment =
+            ShareImageCommonViewFragment.newShareImageCommonViewFragmentInstance(
+                shareText, shareTitle, shareImage,  platType)
+        shareImageCommonViewFragment.setShareResultCallback(shareResultCallBack)
+        shareImageCommonViewFragment.show(fragmentManager, "ShareImageCommonViewFragment")
     }
 
     /**
