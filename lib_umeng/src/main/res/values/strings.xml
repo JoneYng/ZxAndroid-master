@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">lib_share</string>
+    <!-- 分享 -->
+    <string name="share_platform_sina_string">微博</string>
+    <string name="share_platform_qq_string">QQ好友</string>
+    <string name="share_platform_qzone_string">QQ空间</string>
+    <string name="share_platform_wechat_string">微信好友</string>
+    <string name="share_platform_wechatm_string">朋友圈</string>
+    <string name="share_cancle_string">取消</string>
+
+    <string name="share_null_text">分享自ZxAndroid</string>
+
+    <string name="activity_share_wx_nointall_string">微信平台不可用</string>
+    <string name="activity_share_qq_nointall_string">QQ平台不可用</string>
+    <string name="activity_share_sina_nointall_string">微博平台不可用</string>
+
+    <string name="info_operate_faile_tip_string">操作失败</string>
+    <string name="info_operate_success_tip_string">操作成功</string>
+    <string name="info_operate_cancle_tip_string">操作已取消</string>
+
+    <string name="activity_share_exception_string">分享出现错误请重试</string>
+
+</resources>
