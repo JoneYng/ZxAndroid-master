@@ -100,7 +100,7 @@ ext.deps = deps
 
 ext {
     // 图片选择版本
-    def pictureVersion = "v3.10.2"
+    def pictureVersion = "v3.10.8"
     // https://github.com/LuckSiege/PictureSelector/wiki/PictureSelector-3.0-%E5%8A%9F%E8%83%BDapi%E8%AF%B4%E6%98%8E
     picture = [
             //图片选择
